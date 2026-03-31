@@ -1,25 +1,315 @@
+/* ─────────────────────────────────────────────
+   GLOBAL / SHARED FUNCTIONS
+───────────────────────────────────────────── */
 
- 
-  /* ── DRAWER ── */
-  function toggleDrawer() {
-    const drawer    = document.getElementById("drawer");
-    const overlay   = document.getElementById("overlay");
-    const hamburger = document.getElementById("hamburger");
-    const isOpen    = drawer.classList.contains("open");
-    if (isOpen) closeDrawer(); else openDrawer();
+/* Drawer functions used by home page */
+function toggleDrawer() {
+  const drawer = document.getElementById("drawer");
+  const isOpen = drawer && drawer.classList.contains("open");
+
+  if (isOpen) {
+    closeDrawer();
+  } else {
+    openDrawer();
   }
- 
-  function openDrawer() {
-    document.getElementById("drawer").classList.add("open");
-    document.getElementById("overlay").classList.add("show");
-    document.getElementById("hamburger").classList.add("active");
+}
+
+function openDrawer() {
+  const drawer = document.getElementById("drawer");
+  const overlay = document.getElementById("overlay");
+  const hamburger = document.getElementById("hamburger");
+
+  if (drawer) drawer.classList.add("open");
+  if (overlay) overlay.classList.add("show");
+  if (hamburger) hamburger.classList.add("active");
+}
+
+function closeDrawer() {
+  const drawer = document.getElementById("drawer");
+  const overlay = document.getElementById("overlay");
+  const hamburger = document.getElementById("hamburger");
+
+  if (drawer) drawer.classList.remove("open");
+  if (overlay) overlay.classList.remove("show");
+  if (hamburger) hamburger.classList.remove("active");
+}
+
+
+/* ─────────────────────────────────────────────
+   APP INIT
+───────────────────────────────────────────── */
+
+document.addEventListener("DOMContentLoaded", function () {
+  initializeHomePage();
+  initializePeerProfilePage();
+});
+
+
+/* ─────────────────────────────────────────────
+   HOME PAGE
+───────────────────────────────────────────── */
+
+function initializeHomePage() {
+  /* This checks whether we are inside the home page */
+  const hasHomeDrawer = document.getElementById("drawer");
+  const hasHomeHamburger = document.getElementById("hamburger");
+
+  if (!hasHomeDrawer || !hasHomeHamburger) return;
+
+  /* Call home page render only if it exists */
+  if (typeof render === "function") {
+    render();
   }
- 
-  function closeDrawer() {
-    document.getElementById("drawer").classList.remove("open");
-    document.getElementById("overlay").classList.remove("show");
-    document.getElementById("hamburger").classList.remove("active");
+}
+
+
+/* ─────────────────────────────────────────────
+   PEER PROFILE PAGE
+───────────────────────────────────────────── */
+
+let bdSelectedRating = 0;
+let bdSelectedTags = [];
+
+function initializePeerProfilePage() {
+  /* This checks whether we are inside the peer profile page */
+  const peerProfilePage = document.getElementById("bd-peer-profile-page");
+  if (!peerProfilePage) return;
+
+  initializePeerAvatar();
+  initializePeerRatingModal();
+}
+
+
+/* ─────────────────────────────────────────────
+   PEER AVATAR
+───────────────────────────────────────────── */
+
+function initializePeerAvatar() {
+  const avatarElement = document.getElementById("bd-peer-avatar");
+  const nameElement = document.getElementById("bd-peer-name");
+
+  if (!avatarElement || !nameElement) return;
+
+  const fullName = nameElement.textContent.trim();
+  avatarElement.textContent = getInitialsFromName(fullName);
+}
+
+function getInitialsFromName(name) {
+  if (!name) return "NA";
+
+  const nameParts = name.trim().split(/\s+/).filter(Boolean);
+
+  if (nameParts.length === 1) {
+    return nameParts[0].slice(0, 2).toUpperCase();
   }
- 
-  /* ── INIT ── */
-  render();
+
+  return (
+    nameParts[0].charAt(0) +
+    nameParts[1].charAt(0)
+  ).toUpperCase();
+}
+
+
+/* ─────────────────────────────────────────────
+   PEER PROFILE RATING MODAL
+───────────────────────────────────────────── */
+
+function initializePeerRatingModal() {
+  const rateButton = document.getElementById("bd-peer-rate-button");
+  const cancelButton = document.getElementById("bd-rate-cancel-button");
+  const submitButton = document.getElementById("bd-rate-submit-button");
+  const overlay = document.getElementById("bd-rate-modal-overlay");
+
+  if (rateButton) {
+    rateButton.addEventListener("click", openRateModal);
+  }
+
+  if (cancelButton) {
+    cancelButton.addEventListener("click", closeRateModal);
+  }
+
+  if (submitButton) {
+    submitButton.addEventListener("click", submitPeerRating);
+  }
+
+  if (overlay) {
+    overlay.addEventListener("click", closeRateModal);
+  }
+
+  initializeRatingStars();
+  initializeRatingTags();
+}
+
+function openRateModal() {
+  const modal = document.getElementById("bd-rate-modal");
+  const overlay = document.getElementById("bd-rate-modal-overlay");
+
+  if (modal) modal.classList.add("show");
+  if (overlay) overlay.classList.add("show");
+
+  resetRateModal();
+}
+
+function closeRateModal() {
+  const modal = document.getElementById("bd-rate-modal");
+  const overlay = document.getElementById("bd-rate-modal-overlay");
+
+  if (modal) modal.classList.remove("show");
+  if (overlay) overlay.classList.remove("show");
+}
+
+function resetRateModal() {
+  bdSelectedRating = 0;
+  bdSelectedTags = [];
+
+  updateSelectedStars(0);
+
+  document.querySelectorAll(".bd-rate-tag-option").forEach(function (tagButton) {
+    tagButton.classList.remove("selected");
+  });
+}
+
+function initializeRatingStars() {
+  const stars = document.querySelectorAll(".bd-rate-star");
+
+  if (!stars.length) return;
+
+  stars.forEach(function (star) {
+    const value = Number(star.dataset.value);
+
+    star.addEventListener("mouseenter", function () {
+      updateHoveredStars(value);
+    });
+
+    star.addEventListener("mouseleave", function () {
+      updateHoveredStars(0);
+      updateSelectedStars(bdSelectedRating);
+    });
+
+    star.addEventListener("click", function () {
+      bdSelectedRating = value;
+      updateSelectedStars(bdSelectedRating);
+    });
+  });
+}
+
+function updateHoveredStars(value) {
+  const stars = document.querySelectorAll(".bd-rate-star");
+
+  stars.forEach(function (star) {
+    const starValue = Number(star.dataset.value);
+    star.classList.toggle("hovered", starValue <= value);
+  });
+}
+
+function updateSelectedStars(value) {
+  const stars = document.querySelectorAll(".bd-rate-star");
+
+  stars.forEach(function (star) {
+    const starValue = Number(star.dataset.value);
+    star.classList.toggle("active", starValue <= value);
+  });
+}
+
+function initializeRatingTags() {
+  const tagButtons = document.querySelectorAll(".bd-rate-tag-option");
+
+  if (!tagButtons.length) return;
+
+  tagButtons.forEach(function (tagButton) {
+    tagButton.addEventListener("click", function () {
+      const tag = tagButton.dataset.tag;
+
+      if (bdSelectedTags.includes(tag)) {
+        bdSelectedTags = bdSelectedTags.filter(function (item) {
+          return item !== tag;
+        });
+        tagButton.classList.remove("selected");
+      } else {
+        bdSelectedTags.push(tag);
+        tagButton.classList.add("selected");
+      }
+    });
+  });
+}
+
+function submitPeerRating() {
+  if (bdSelectedRating < 1) {
+    alert("Please choose a star rating first.");
+    return;
+  }
+
+  updatePeerRatingUI(bdSelectedRating);
+
+  const payload = {
+    peerName: document.getElementById("bd-peer-name")?.textContent || "",
+    rating: bdSelectedRating,
+    tags: bdSelectedTags
+  };
+
+  console.log("Rating payload to send later:", payload);
+
+  /*
+    Later with PHP + DB:
+    fetch("save_rating.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+  */
+
+  closeRateModal();
+}
+
+function updatePeerRatingUI(newRating) {
+  const ratingNumber = document.getElementById("bd-peer-rating-number");
+  const ratingStars = document.getElementById("bd-peer-rating-stars");
+  const ratingReviews = document.getElementById("bd-peer-rating-reviews");
+  const ratingCircle = document.getElementById("bd-peer-rating-circle");
+
+  const currentAverage = Number(ratingNumber?.textContent || 0);
+  const currentReviewText = ratingReviews?.textContent || "0 reviews";
+  const currentReviews = extractReviewCount(currentReviewText);
+
+  const newReviewCount = currentReviews + 1;
+  const newAverage = ((currentAverage * currentReviews) + newRating) / newReviewCount;
+  const roundedAverage = newAverage.toFixed(1);
+
+  if (ratingNumber) {
+    ratingNumber.textContent = roundedAverage;
+  }
+
+  if (ratingReviews) {
+    ratingReviews.textContent = `${newReviewCount} reviews`;
+  }
+
+  if (ratingStars) {
+    ratingStars.textContent = buildStarsFromAverage(Number(roundedAverage));
+  }
+
+  if (ratingCircle) {
+    const degree = (Number(roundedAverage) / 5) * 360;
+    ratingCircle.style.background = `conic-gradient(
+      var(--teal) 0deg ${degree}deg,
+      #e6eef5 ${degree}deg 360deg
+    )`;
+  }
+}
+
+function extractReviewCount(text) {
+  const match = text.match(/\d+/);
+  return match ? Number(match[0]) : 0;
+}
+
+function buildStarsFromAverage(average) {
+  const filled = Math.round(average);
+  let stars = "";
+
+  for (let i = 1; i <= 5; i++) {
+    stars += i <= filled ? "★" : "☆";
+  }
+
+  return stars;
+}
+
+

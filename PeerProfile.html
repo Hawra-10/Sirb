@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Peer Profile</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+
+
+
+<!-- =========================
+     RATE MODAL
+========================= -->
+<div id="bd-rate-modal-overlay"></div>
+
+<div id="bd-rate-modal">
+    <div id="bd-rate-modal-card">
+
+        <h2 id="bd-rate-modal-title">Rate Peer</h2>
+
+        <!-- Star rating -->
+        <div id="bd-rate-stars-row">
+            <button type="button" class="bd-rate-star" data-value="1">★</button>
+            <button type="button" class="bd-rate-star" data-value="2">★</button>
+            <button type="button" class="bd-rate-star" data-value="3">★</button>
+            <button type="button" class="bd-rate-star" data-value="4">★</button>
+            <button type="button" class="bd-rate-star" data-value="5">★</button>
+        </div>
+
+        <!-- Tags / categories -->
+        <div id="bd-rate-tags-title">Choose tags:</div>
+
+        <div id="bd-rate-tags-list">
+            <button type="button" class="bd-rate-tag-option" data-tag="Leadership">Leadership</button>
+            <button type="button" class="bd-rate-tag-option" data-tag="Research">Research</button>
+            <button type="button" class="bd-rate-tag-option" data-tag="Coding">Coding</button>
+            <button type="button" class="bd-rate-tag-option" data-tag="UI/UX">UI/UX</button>
+            <button type="button" class="bd-rate-tag-option" data-tag="Teamwork">Teamwork</button>
+            <button type="button" class="bd-rate-tag-option" data-tag="Communication">Communication</button>
+        </div>
+
+        <!-- Buttons -->
+        <div id="bd-rate-actions">
+            <button type="button" id="bd-rate-cancel-button">Cancel</button>
+            <button type="button" id="bd-rate-submit-button">Submit</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<body id="bd-body-peer-profile">
+
+<main id="bd-peer-profile-page">
+
+<section id="bd-peer-profile-shell">
+
+<div id="bd-peer-top-glow"></div>
+
+<section id="bd-peer-profile-card">
+
+<header id="bd-peer-profile-header">
+    <a id="bd-peer-back-button" href="HomePage.html">←</a>
+    <h1 id="bd-peer-profile-title">Peer Profile</h1>
+</header>
+
+<!-- TOP -->
+<section id="bd-peer-profile-top-section">
+
+<section id="bd-peer-profile-left-side">
+
+<!-- ✅ AVATAR -->
+<div id="bd-peer-avatar"></div>
+
+<div class="bd-peer-info-row">
+<span class="bd-peer-info-label">Name</span>
+<span class="bd-peer-info-value" id="bd-peer-name">Bodour Albarqi</span>
+</div>
+
+<div class="bd-peer-info-row">
+<span class="bd-peer-info-label">Major</span>
+<span class="bd-peer-info-value" id="bd-peer-major">Information Technology</span>
+</div>
+
+<div class="bd-peer-info-row">
+<span class="bd-peer-info-label">Email</span>
+<span class="bd-peer-info-value" id="bd-peer-email">student@ksu.edu.sa</span>
+</div>
+
+</section>
+
+<!-- RATING -->
+<section id="bd-peer-profile-right-side">
+
+<div id="bd-peer-rating-section">
+
+<div id="bd-peer-rating-circle">
+<span id="bd-peer-rating-number">4.8</span>
+</div>
+
+<div id="bd-peer-rating-details">
+<p id="bd-peer-rating-stars">★★★★★</p>
+<p id="bd-peer-rating-reviews">15 reviews</p>
+</div>
+
+</div>
+
+</section>
+
+</section>
+
+<!-- SKILLS -->
+<section id="bd-peer-skills-section">
+
+<h2 id="bd-peer-skills-title">Skills</h2>
+
+<div id="bd-peer-skills-list">
+<span class="bd-peer-skill-tag bd-peer-skill-tag-teal">Leadership</span>
+<span class="bd-peer-skill-tag bd-peer-skill-tag-gold">Research</span>
+<span class="bd-peer-skill-tag bd-peer-skill-tag-navy">Coding</span>
+<span class="bd-peer-skill-tag bd-peer-skill-tag-pink">UI/UX</span>
+</div>
+
+</section>
+
+<!-- PROJECTS -->
+<section id="bd-peer-projects-section">
+
+<h2 id="bd-peer-projects-title">Projects</h2>
+
+<div id="bd-peer-projects-list">
+
+<div class="bd-peer-project-item">
+<span class="bd-peer-project-line"></span>
+<span class="bd-peer-project-text">Sirb Platform</span>
+</div>
+
+<div class="bd-peer-project-item">
+<span class="bd-peer-project-line"></span>
+<span class="bd-peer-project-text">Airline Reservation System</span>
+</div>
+
+<div class="bd-peer-project-item">
+<span class="bd-peer-project-line"></span>
+<span class="bd-peer-project-text">Recipe Website</span>
+</div>
+
+</div>
+
+</section>
+
+<!-- BUTTON -->
+<div id="bd-peer-rate-button-wrapper">
+<button id="bd-peer-rate-button">Rate</button>
+</div>
+
+</section>
+
+</section>
+
+</main>
+
+    <script src="script.js"></script>
+</body>
+</html>
