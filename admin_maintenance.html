@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surb | Admin Maintenance</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> 
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -12,14 +12,12 @@
         <main class="main">
             <header class="topbar">
                 <div class="logo-wrap">
-                    <img src="logo.png" alt="Surb Logo" style="width: 40px; height: auto;"> 
+                    <img src="logo.png" alt="Surb Logo" style="width: 40px; height: auto; margin-right: 10px;">
                     <span class="logo-name">Surb Admin</span>
                 </div>
-                
                 <div style="flex: 1; text-align: center;">
                     <h2 style="font-family: 'Syne'; color: var(--navy);">System Maintenance</h2>
                 </div>
-
                 <button onclick="window.location.href='login.html'" class="drawer-logout" style="margin-top: 0; padding: 10px 20px;">
                     Logout
                 </button>
@@ -29,8 +27,8 @@
                 <div class="results-count">
                     Outdated Accounts <span>(Older than 7 Years)</span>
                 </div>
-                <button id="purgeBtn" class="drawer-logout" style="background: #e74c3c; border-color: #c0392b; color: white; display: none; margin-top: 0;">
-                    Delete Selected
+                <button id="purgeBtn" class="drawer-logout" style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">
+                    Delete Selected Accounts
                 </button>
             </div>
 
@@ -41,7 +39,7 @@
                             <th style="padding: 15px;"><input type="checkbox" id="selectAll"></th>
                             <th style="padding: 15px;">Student Name</th>
                             <th style="padding: 15px;">Registration Date</th>
-                            <th style="padding: 15px;">Status</th>
+                            <th style="padding: 15px;">Last Active</th>
                         </tr>
                     </thead>
                     <tbody id="studentTable">
@@ -81,6 +79,13 @@
             const checkedCount = document.querySelectorAll('.student-checkbox:checked').length;
             purgeBtn.style.display = checkedCount > 0 ? 'block' : 'none';
         }
+
+        purgeBtn.addEventListener('click', () => {
+            if(confirm('Are you sure you want to delete the selected accounts?')) {
+                alert('Success: Selected accounts have been removed.');
+                location.reload();
+            }
+        });
     </script>
 </body>
 </html>
