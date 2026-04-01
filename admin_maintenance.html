@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surb | Admin Maintenance</title>
+    <link rel="stylesheet" href="style.css"> <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="shell">
+        <main class="main">
+            <header class="topbar">
+                <div class="logo-wrap">
+                    <span class="logo-name">Surb Admin</span>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <h2 style="font-family: 'Syne'; color: var(--navy);">System Maintenance</h2>
+                </div>
+            </header>
+
+            <div class="results-meta">
+                <div class="results-count">
+                    Outdated Accounts <span>(Older than 7 Years)</span>
+                </div>
+                <button id="purgeBtn" class="drawer-logout" style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">
+                    Delete Selected Accounts
+                </button>
+            </div>
+
+            <div class="card-bg" style="background: var(--card-bg); border-radius: 20px; padding: 20px; box-shadow: 0 4px 24px rgba(26, 42, 74, 0.07);">
+                <table style="width: 100%; border-collapse: collapse; font-family: 'DM Sans';">
+                    <thead>
+                        <tr style="text-align: left; border-bottom: 2px solid var(--bg); color: var(--navy);">
+                            <th style="padding: 15px;"><input type="checkbox" id="selectAll"></th>
+                            <th style="padding: 15px;">Student Name</th>
+                            <th style="padding: 15px;">Registration Date</th>
+                            <th style="padding: 15px;">Last Active</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTable">
+                        <tr style="border-bottom: 1px solid var(--bg);">
+                            <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
+                            <td style="padding: 15px; font-weight: 600;">Jood Al-Otaibi</td>
+                            <td style="padding: 15px; color: var(--muted);">2015-02-10</td>
+                            <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--bg);">
+                            <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
+                            <td style="padding: 15px; font-weight: 600;">Sara Ahmed</td>
+                            <td style="padding: 15px; color: var(--muted);">2016-11-25</td>
+                            <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // كود بسيط للتحكم في اختيار المربعات وظهور زر الحذف
+        const selectAll = document.getElementById('selectAll');
+        const checkboxes = document.querySelectorAll('.student-checkbox');
+        const purgeBtn = document.getElementById('purgeBtn');
+
+        // عند الضغط على "تحديد الكل"
+        selectAll.addEventListener('change', (e) => {
+            checkboxes.forEach(cb => cb.checked = e.target.checked);
+            togglePurgeButton();
+        });
+
+        // إظهار/إخفاء زر الحذف بناءً على الاختيار
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', togglePurgeButton);
+        });
+
+        function togglePurgeButton() {
+            const checkedCount = document.querySelectorAll('.student-checkbox:checked').length;
+            purgeBtn.style.display = checkedCount > 0 ? 'block' : 'none';
+        }
+
+        purgeBtn.addEventListener('click', () => {
+            if(confirm('Are you sure you want to delete the selected accounts?')) {
+                alert('Success: Selected accounts have been removed.');
+                location.reload(); // محاكاة للتحديث بعد الحذف
+            }
+        });
+    </script>
+</body>
+</html>
