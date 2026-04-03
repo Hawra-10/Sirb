@@ -57,14 +57,10 @@
   </div>
 
   <script>
-    const emailInput    = document.getElementById('ar-email');
+const togglePw  = document.getElementById('ar-toggle-pw');
+const eyeIcon   = document.getElementById('ar-eye-icon');
+const loginBtn  = document.getElementById('ar-login-btn');
 const passwordInput = document.getElementById('ar-password');
-const loginBtn      = document.getElementById('ar-login-btn');
-const alertBox      = document.getElementById('ar-alert');
-const emailError    = document.getElementById('ar-email-error');
-const passwordError = document.getElementById('ar-password-error');
-const togglePw      = document.getElementById('ar-toggle-pw');
-const eyeIcon       = document.getElementById('ar-eye-icon');
 
 const EYE_OPEN = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
 const EYE_SHUT = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;
@@ -75,72 +71,29 @@ togglePw.addEventListener('click', () => {
   eyeIcon.innerHTML = isHidden ? EYE_SHUT : EYE_OPEN;
 });
 
+const emailInput = document.getElementById('ar-email');
+const emailError = document.getElementById('ar-email-error');
+
 function isValidEmail(val) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
 }
 
-function setError(el, show) {
-  el.classList.toggle('ar-visible', show);
-}
-
-function clearFieldError(input, errorEl) {
-  input.classList.remove('ar-error-input');
-  setError(errorEl, false);
-}
-
-emailInput.addEventListener('input', () => clearFieldError(emailInput, emailError));
-passwordInput.addEventListener('input', () => clearFieldError(passwordInput, passwordError));
+emailInput.addEventListener('input', () => {
+  emailInput.classList.remove('ar-error-input');
+  emailError.classList.remove('ar-visible');
+});
 
 loginBtn.addEventListener('click', () => {
-  const email    = emailInput.value.trim();
-  const password = passwordInput.value;
-  let valid = true;
-
-  alertBox.classList.remove('ar-visible');
-
-  if (!isValidEmail(email)) {
+  if (!isValidEmail(emailInput.value)) {
     emailInput.classList.add('ar-error-input');
-    setError(emailError, true);
-    valid = false;
-  } else {
-    clearFieldError(emailInput, emailError);
-  }
-
-  if (!password) {
-    passwordInput.classList.add('ar-error-input');
-    setError(passwordError, true);
-    valid = false;
-  } else {
-    clearFieldError(passwordInput, passwordError);
-  }
-
-  if (!valid) return;
-
-  const users = JSON.parse(localStorage.getItem('ar_users') || '[]');
-  const match = users.find(u => u.email === email && u.password === password);
-
-  if (!match) {
-    alertBox.classList.remove('ar-visible');
-    void alertBox.offsetWidth;
-    alertBox.classList.add('ar-visible');
-    emailInput.classList.add('ar-error-input');
-    passwordInput.classList.add('ar-error-input');
+    emailError.classList.add('ar-visible');
     return;
   }
-
-  localStorage.setItem('ar_session', JSON.stringify({
-    email:     match.email,
-    firstName: match.firstName,
-    lastName:  match.lastName,
-    major:     match.major,
-    skills:    match.skills,
-    projects:  match.projects,
-    loggedIn:  true
-  }));
-
+  emailInput.classList.remove('ar-error-input');
+  emailError.classList.remove('ar-visible');
   loginBtn.disabled = true;
   loginBtn.textContent = 'Redirecting…';
-  setTimeout(() => { window.location.href = 'home.html'; }, 900);
+  setTimeout(() => { window.location.href = 'Homepage.html'; }, 900);
 });
   </script>
 </body>

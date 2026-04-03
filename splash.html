@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sirb</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="ar-page">
+
+    <div class="ar-card">
+
+      <div class="ar-logo-wrap">
+        <img src="logo.png" alt="Sirb Logo" class="ar-logo" />
+      </div>
+
+      <div class="ar-brand-name">Sirb</div>
+
+      <div class="ar-tagline">
+            Discover teammates. Build stronger projects.
+     </div>
+
+      <div class="ar-divider"></div>
+
+      <div class="ar-actions">
+        <a href="signup.html" class="ar-btn-signup">Sign Up</a>
+        <p class="ar-login-line">
+          Already have an account?
+          <a href="login.html" class="ar-login-link">Log in</a>
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const logoWrap = document.querySelector('.ar-logo-wrap');
+
+logoWrap.addEventListener('animationend', () => {
+  logoWrap.style.animation = 'none';
+}, { once: true });
+  </script>
+</body>
+</html>
