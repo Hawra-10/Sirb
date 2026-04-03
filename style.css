@@ -405,8 +405,10 @@
 @keyframes cardIn {
   from {
     opacity: 0;
-    margin-top: 20px; /* نستخدم margin بدل translateY */
+    margin-top: 20px;
+    /* نستخدم margin بدل translateY */
   }
+
   to {
     opacity: 1;
     margin-top: 0;
@@ -480,24 +482,40 @@
 }
 
 .tag.leadership {
+  background: rgba(30, 168, 160, 0.10);
+  border-color: rgba(30, 168, 160, 0.25);
   color: var(--teal);
-  border-color: rgba(30, 168, 160, .35);
-  background: rgba(30, 168, 160, .07);
 }
 
-.tag.innovation {
-  color: var(--gold);
-  border-color: rgba(232, 168, 32, .35);
-  background: rgba(232, 168, 32, .08);
+.tag.coding {
+  background: rgba(26, 42, 74, 0.06);
+  border-color: rgba(26, 42, 74, 0.16);
+  color: var(--navy);
 }
 
 .tag.research {
-  color: var(--navy);
-  border-color: rgba(26, 42, 74, .25);
-  background: rgba(26, 42, 74, .06);
+  background: rgba(232, 168, 32, 0.10);
+  border-color: rgba(232, 168, 32, 0.25);
+  color: #c58a10;
 }
 
+.tag.uiux {
+  background: rgba(239, 108, 154, 0.10);
+  border-color: rgba(239, 108, 154, 0.20);
+  color: #cf4f80;
+}
 
+.tag.communication {
+  background: rgba(230, 126, 34, 0.10);
+  border-color: rgba(230, 126, 34, 0.25);
+  color: #d35400;
+}
+
+.tag.teamwork {
+  background: rgba(108, 92, 231, 0.08);
+  border-color: rgba(108, 92, 231, 0.20);
+  color: #6c5ce7;
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar {
@@ -2012,30 +2030,9 @@ footer span {
 }
 
 
-/* Splash page /////////////////////////////*/ 
-/* ============================= */
-/* Root Variables (Color System) */
-/* ============================= */
-:root {
-  --navy: #1a2a4a;
-  --teal: #1ea8a0;
-  --teal-light: #2ecfc6;
-  --bg: #f4f8fb;
-  --card-bg: #ffffff;
-  --text: #1a2a4a;
-  --muted: #6b7fa3;
-}
+/* Splash page /////////////////////////////*/
 
-/* ============================= */
-/* Reset & Base Styles */
-/* ============================= */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
+.sp-body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
 
@@ -2099,17 +2096,17 @@ body {
 @keyframes logoGlow {
   0% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0px rgba(30,168,160,0));
+    filter: drop-shadow(0 0 0px rgba(30, 168, 160, 0));
   }
 
   50% {
     transform: scale(1.08);
-    filter: drop-shadow(0 0 30px rgba(30,168,160,0.6));
+    filter: drop-shadow(0 0 30px rgba(30, 168, 160, 0.6));
   }
 
   100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 0px rgba(30,168,160,0));
+    filter: drop-shadow(0 0 0px rgba(30, 168, 160, 0));
   }
 }
 
@@ -2118,13 +2115,15 @@ body {
 /* Glow keyframes */
 @keyframes glow {
   0% {
-    filter: drop-shadow(0 0 0px rgba(30,168,160,0));
+    filter: drop-shadow(0 0 0px rgba(30, 168, 160, 0));
   }
+
   50% {
-    filter: drop-shadow(0 0 25px rgba(30,168,160,0.6));
+    filter: drop-shadow(0 0 25px rgba(30, 168, 160, 0.6));
   }
+
   100% {
-    filter: drop-shadow(0 0 0px rgba(30,168,160,0));
+    filter: drop-shadow(0 0 0px rgba(30, 168, 160, 0));
   }
 }
 
@@ -2161,12 +2160,10 @@ body {
   height: 1px;
 
   /* Gradient line for soft UI */
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(30,168,160,0.3),
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      rgba(30, 168, 160, 0.3),
+      transparent);
 
   margin-bottom: 35px;
 }
@@ -2193,11 +2190,9 @@ body {
   padding: 18px;
   border-radius: 14px;
 
-  background: linear-gradient(
-    120deg,
-    var(--teal),
-    var(--teal-light)
-  );
+  background: linear-gradient(120deg,
+      var(--teal),
+      var(--teal-light));
 
   color: white;
   text-decoration: none;
@@ -2214,13 +2209,13 @@ body {
   transition: 0.25s;
 
   /* Button shadow */
-  box-shadow: 0 10px 30px rgba(30,168,160,0.3);
+  box-shadow: 0 10px 30px rgba(30, 168, 160, 0.3);
 }
 
 /* Hover effect */
 .ar-btn-signup:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 40px rgba(30,168,160,0.4);
+  box-shadow: 0 14px 40px rgba(30, 168, 160, 0.4);
 }
 
 /* Click effect */

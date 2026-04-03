@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surb | Admin Maintenance</title>
-    <link rel="stylesheet" href="style.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div class="shell">
         <main class="main">
@@ -18,7 +21,8 @@
                 <div style="flex: 1; text-align: center;">
                     <h2 style="font-family: 'Syne'; color: var(--navy);">System Maintenance</h2>
                 </div>
-                <button onclick="window.location.href='login.html'" class="drawer-logout" style="margin-top: 0; padding: 10px 20px;">
+                <button onclick="window.location.href='login.html'" class="drawer-logout"
+                    style="margin-top: 0; padding: 10px 20px;">
                     Logout
                 </button>
             </header>
@@ -27,12 +31,14 @@
                 <div class="results-count">
                     Outdated Accounts <span>(Older than 7 Years)</span>
                 </div>
-                <button id="purgeBtn" class="drawer-logout" style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">
+                <button id="purgeBtn" class="drawer-logout"
+                    style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">
                     Delete Selected Accounts
                 </button>
             </div>
 
-            <div class="card-bg" style="background: var(--card-bg); border-radius: 20px; padding: 20px; box-shadow: 0 4px 24px rgba(26, 42, 74, 0.07);">
+            <div class="card-bg"
+                style="background: var(--card-bg); border-radius: 20px; padding: 20px; box-shadow: 0 4px 24px rgba(26, 42, 74, 0.07);">
                 <table style="width: 100%; border-collapse: collapse; font-family: 'DM Sans';">
                     <thead>
                         <tr style="text-align: left; border-bottom: 2px solid var(--bg); color: var(--navy);">
@@ -60,7 +66,10 @@
             </div>
         </main>
     </div>
-
+    <!-- ─── FOOTER ─── -->
+    <footer>
+        © 2025 <span>Sirb</span>. All rights reserved.
+    </footer>
     <script>
         const selectAll = document.getElementById('selectAll');
         const checkboxes = document.querySelectorAll('.student-checkbox');
@@ -81,11 +90,12 @@
         }
 
         purgeBtn.addEventListener('click', () => {
-            if(confirm('Are you sure you want to delete the selected accounts?')) {
+            if (confirm('Are you sure you want to delete the selected accounts?')) {
                 alert('Success: Selected accounts have been removed.');
                 location.reload();
             }
         });
     </script>
 </body>
+
 </html>

@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Set up Profile</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="ar-body">
 
   <div class="ar-container">
@@ -82,6 +86,11 @@
 
     <div class="ar-success-msg" id="ar-success">🎉 Profile set up successfully!</div>
   </div>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    © 2025 <span>Sirb</span>. All rights reserved.
+  </footer>
 
   <script>
     // ── Skills ──
@@ -158,7 +167,7 @@
 
       // Auto-add new card when both fields of this card are filled
       const nameInput = card.querySelector('.ar-proj-name');
-      const urlInput  = card.querySelector('.ar-proj-url');
+      const urlInput = card.querySelector('.ar-proj-url');
 
       function checkAutoAdd() {
         const isLast = card === list.lastElementChild;
@@ -235,8 +244,8 @@
       // Validate all project URL fields that have a value
       list.querySelectorAll('.ar-project-card').forEach(card => {
         const urlInput = card.querySelector('.ar-proj-url');
-        const urlErr   = card.querySelector('.ar-proj-url-error');
-        const urlVal   = urlInput.value.trim();
+        const urlErr = card.querySelector('.ar-proj-url-error');
+        const urlVal = urlInput.value.trim();
         if (urlVal && !isValidGoogleUrl(urlVal)) {
           urlErr.classList.add('ar-visible');
           urlInput.classList.add('ar-error-input');
@@ -264,4 +273,5 @@
     });
   </script>
 </body>
+
 </html>
