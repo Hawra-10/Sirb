@@ -20,7 +20,7 @@
   padding: 0;
 }
 
-body {
+#home_bd {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   color: var(--text);
@@ -29,7 +29,7 @@ body {
 }
 
 /* ── Background mesh ── */
-body::before {
+#home_bd::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -159,7 +159,7 @@ body::before {
 /* ══════════════════════════════
      MAIN CONTENT
   ══════════════════════════════ */
-.main {
+#home_main {
   flex: 1;
   padding: 28px 36px 48px;
   transition: padding-right var(--transition);
@@ -511,7 +511,7 @@ body::before {
 }
 
 @media (max-width: 640px) {
-  .main {
+  #home_main {
     padding: 20px 18px 40px;
   }
 
@@ -1235,27 +1235,6 @@ footer span {
 
 /*-----------------------------------setup profile-----------------------------*/
 
-:root {
-  --navy: #1a2a4a;
-  --teal: #1ea8a0;
-  --teal-light: #2ecfc6;
-  --gold: #e8a820;
-  --gold-light: #f5c842;
-  --bg: #f0f4f8;
-  --card-bg: #ffffff;
-  --text: #1a2a4a;
-  --muted: #6b7fa3;
-  --border: rgba(30, 168, 160, .22);
-  --radius: 16px;
-  --transition: 0.22s ease;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
@@ -1727,27 +1706,6 @@ body::before {
 
 
 /* login page */
-
-:root {
-  --navy: #1a2a4a;
-  --teal: #1ea8a0;
-  --teal-light: #2ecfc6;
-  --gold: #e8a820;
-  --bg: #f0f4f8;
-  --card-bg: #ffffff;
-  --text: #1a2a4a;
-  --muted: #6b7fa3;
-  --border: rgba(30, 168, 160, .22);
-  --radius: 14px;
-  --transition: 0.22s ease;
-  --error: #e05858;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
 body {
   font-family: 'DM Sans', sans-serif;
