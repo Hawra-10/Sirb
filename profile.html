@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile</title>
-
     <link rel="stylesheet" href="style.css">
-
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Small addition to handle the edit state appearance */
+        .edit-input {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 4px 8px;
+            width: 100%;
+            background: #f8fafc;
+        }
+        #available-skills-grid .bd-peer-skill-tag {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+    </style>
 </head>
 
 <body id="bd-body-user-profile">
@@ -22,54 +37,43 @@
                 <div class="profile-role">IT Student</div>
             </div>
         </div>
-
-        <a class="drawer-logout" href="login.html">
-            ← Log out
-        </a>
+        <a class="drawer-logout" href="login.html">← Log out</a>
     </div>
 
     <main id="bd-peer-profile-page">
-
         <section id="bd-peer-profile-shell">
-
             <div id="bd-peer-top-glow"></div>
 
             <section id="bd-peer-profile-card">
-
                 <header id="bd-peer-profile-header">
                     <a id="bd-peer-back-button" href="HomePage.html">←</a>
                     <h1 id="bd-peer-profile-title">My Profile</h1>
-
                     <button class="hamburger" id="bd-peer-hamburger" onclick="toggleDrawer()" aria-label="Menu">
                         <span></span><span></span><span></span>
                     </button>
                 </header>
 
                 <section id="bd-peer-profile-top-section">
-
                     <section id="bd-peer-profile-left-side">
-
                         <div id="bd-peer-avatar">JB</div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Name</span>
-                            <span class="bd-peer-info-value" id="bd-peer-name">Joud BinFaris</span>
+                            <span id="name-container"><span class="bd-peer-info-value" id="bd-peer-name">Joud BinFaris</span></span>
                         </div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Major</span>
-                            <span class="bd-peer-info-value" id="bd-peer-major">Information Technology</span>
+                            <span id="major-container"><span class="bd-peer-info-value" id="bd-peer-major">Information Technology</span></span>
                         </div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Email</span>
-                            <span class="bd-peer-info-value" id="bd-peer-email">student@ksu.edu.sa</span>
+                            <span id="email-container"><span class="bd-peer-info-value" id="bd-peer-email">student@ksu.edu.sa</span></span>
                         </div>
-
                     </section>
 
                     <section id="bd-peer-profile-right-side">
-
                         <div id="bd-peer-rating-section">
                             <div id="bd-peer-rating-circle">
                                 <span id="bd-peer-rating-number">4.8</span>
@@ -79,9 +83,7 @@
                                 <p id="bd-peer-rating-reviews">Your Average Rating</p>
                             </div>
                         </div>
-
                     </section>
-
                 </section>
 
                 <section id="bd-peer-skills-section">
@@ -91,6 +93,12 @@
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-gold">Research</span>
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-navy">Coding</span>
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-pink">UI/UX</span>
+                    </div>
+
+                    <div id="edit-skills-container" style="display: none; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
+                        <p style="font-weight: bold; font-size: 13px; color: #475569; margin-bottom: 12px; letter-spacing: 0.5px;">SELECT SKILLS *</p>
+                        <div id="available-skills-grid" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            </div>
                     </div>
                 </section>
 
@@ -113,19 +121,110 @@
                 </section>
 
                 <div id="bd-peer-rate-button-wrapper">
-                    <button id="bd-peer-rate-button" onclick="location.href='edit-profile.html'">Edit Profile</button>
+                    <button id="bd-peer-rate-button" onclick="toggleEditMode()">Edit Profile</button>
                 </div>
-
             </section>
-
         </section>
-
     </main>
 
     <footer>
         © 2025 <span>Sirb</span>. All rights reserved.
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // --- DRAWER LOGIC ---
+        function toggleDrawer() {
+            document.getElementById('drawer').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+        function closeDrawer() {
+            document.getElementById('drawer').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        // --- EDIT MODE LOGIC ---
+        let isEditMode = false;
+        const availableSkills = ["Leadership", "Research", "Innovation", "Communication", "Problem Solving", "Programming", "Teamwork", "Data Analysis"];
+
+        function toggleEditMode() {
+            const btn = document.getElementById('bd-peer-rate-button');
+            const skillContainer = document.getElementById('edit-skills-container');
+            
+            const fields = [
+                { id: 'bd-peer-name', parent: 'name-container' },
+                { id: 'bd-peer-major', parent: 'major-container' },
+                { id: 'bd-peer-email', parent: 'email-container' }
+            ];
+
+            if (!isEditMode) {
+                isEditMode = true;
+                btn.innerText = "Save Changes";
+                btn.style.backgroundColor = "#10b981"; // Emerald green
+                skillContainer.style.display = "block";
+                
+                fields.forEach(field => {
+                    const element = document.getElementById(field.id);
+                    const parent = document.getElementById(field.parent);
+                    const val = element.innerText;
+                    parent.innerHTML = `<input type="text" id="${field.id}" class="edit-input" value="${val}">`;
+                });
+
+                renderSkillPicker();
+            } else {
+                isEditMode = false;
+                btn.innerText = "Edit Profile";
+                btn.style.backgroundColor = ""; 
+                skillContainer.style.display = "none";
+
+                fields.forEach(field => {
+                    const input = document.getElementById(field.id);
+                    const parent = document.getElementById(field.parent);
+                    const newVal = input.value;
+                    parent.innerHTML = `<span class="bd-peer-info-value" id="${field.id}">${newVal}</span>`;
+                });
+            }
+        }
+
+        function renderSkillPicker() {
+            const grid = document.getElementById('available-skills-grid');
+            const activeSkills = Array.from(document.querySelectorAll('#bd-peer-skills-list .bd-peer-skill-tag'))
+                                      .map(s => s.innerText);
+            grid.innerHTML = ''; 
+
+            availableSkills.forEach(name => {
+                const tag = document.createElement('span');
+                tag.className = 'bd-peer-skill-tag';
+                tag.innerText = name;
+                
+                const isActive = activeSkills.includes(name);
+                tag.style.opacity = isActive ? "1" : "0.35";
+                tag.style.transform = isActive ? "scale(1.05)" : "scale(1)";
+                tag.style.border = isActive ? "1px solid #1e293b" : "1px dashed #cbd5e1";
+
+                tag.onclick = () => {
+                    toggleSkill(name);
+                    renderSkillPicker();
+                };
+                grid.appendChild(tag);
+            });
+        }
+
+        function toggleSkill(name) {
+            const list = document.getElementById('bd-peer-skills-list');
+            const currentTags = Array.from(list.querySelectorAll('.bd-peer-skill-tag'));
+            const existing = currentTags.find(t => t.innerText === name);
+
+            if (existing) {
+                existing.remove();
+            } else {
+                const newTag = document.createElement('span');
+                const colors = ['teal', 'gold', 'navy', 'pink'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                newTag.className = `bd-peer-skill-tag bd-peer-skill-tag-${randomColor}`;
+                newTag.innerText = name;
+                list.appendChild(newTag);
+            }
+        }
+    </script>
 </body>
 </html>
