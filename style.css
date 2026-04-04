@@ -1536,8 +1536,8 @@ footer span {
   box-shadow: 0 8px 56px rgba(26, 42, 74, .11), 0 1.5px 0 rgba(30, 168, 160, .18) inset;
   border: 1.5px solid rgba(30, 168, 160, .13);
   animation: fadeUp .55s cubic-bezier(.4, 0, .2, 1) both;
-   width: 90%;              /* instead of tight center */
-  max-width: 1000px;      /* 🔥 bigger desktop size */
+   width: 90%;              
+  max-width: 1000px;      
   margin: 80px auto; 
 }
 
