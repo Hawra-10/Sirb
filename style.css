@@ -1525,7 +1525,7 @@ footer span {
 }
 
 /* ── CONTAINER ── */
-.ar-container {
+.arS-container {
   position: relative;
   z-index: 1;
   background: var(--card-bg);
@@ -1536,7 +1536,11 @@ footer span {
   box-shadow: 0 8px 56px rgba(26, 42, 74, .11), 0 1.5px 0 rgba(30, 168, 160, .18) inset;
   border: 1.5px solid rgba(30, 168, 160, .13);
   animation: fadeUp .55s cubic-bezier(.4, 0, .2, 1) both;
+   width: 90%;              /* instead of tight center */
+  max-width: 1000px;      /* 🔥 bigger desktop size */
+  margin: 80px auto; 
 }
+
 
 @keyframes fadeUp {
   from {
