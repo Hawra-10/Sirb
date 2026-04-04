@@ -2,7 +2,11 @@
    GLOBAL / SHARED FUNCTIONS
 ───────────────────────────────────────────── */
 
-/* Drawer functions used by home page */
+function getActiveHamburger() {
+  return document.getElementById("hamburger") || document.getElementById("bd-peer-hamburger");
+}
+
+/* Drawer functions used by home page + peer profile */
 function toggleDrawer() {
   const drawer = document.getElementById("drawer");
   const isOpen = drawer && drawer.classList.contains("open");
@@ -17,7 +21,7 @@ function toggleDrawer() {
 function openDrawer() {
   const drawer = document.getElementById("drawer");
   const overlay = document.getElementById("overlay");
-  const hamburger = document.getElementById("hamburger");
+  const hamburger = getActiveHamburger();
 
   if (drawer) drawer.classList.add("open");
   if (overlay) overlay.classList.add("show");
@@ -27,7 +31,7 @@ function openDrawer() {
 function closeDrawer() {
   const drawer = document.getElementById("drawer");
   const overlay = document.getElementById("overlay");
-  const hamburger = document.getElementById("hamburger");
+  const hamburger = getActiveHamburger();
 
   if (drawer) drawer.classList.remove("open");
   if (overlay) overlay.classList.remove("show");
@@ -61,8 +65,6 @@ function initializeHomePage() {
     render();
   }
 }
-
-
 /* ─────────────────────────────────────────────
    PEER PROFILE PAGE
 ───────────────────────────────────────────── */
@@ -78,7 +80,6 @@ function initializePeerProfilePage() {
   initializePeerAvatar();
   initializePeerRatingModal();
 }
-
 
 /* ─────────────────────────────────────────────
    PEER AVATAR
@@ -108,7 +109,6 @@ function getInitialsFromName(name) {
     nameParts[1].charAt(0)
   ).toUpperCase();
 }
-
 
 /* ─────────────────────────────────────────────
    PEER PROFILE RATING MODAL
@@ -259,6 +259,7 @@ function submitPeerRating() {
   */
 
   closeRateModal();
+  showRatingSuccessToast();
 }
 
 function updatePeerRatingUI(newRating) {
@@ -312,4 +313,18 @@ function buildStarsFromAverage(average) {
   return stars;
 }
 
+function showRatingSuccessToast() {
+  const toast = document.getElementById("bd-rate-success-toast");
+  if (!toast) return;
 
+  toast.textContent = "Rating submitted successfully!";
+  toast.classList.add("show");
+
+  clearTimeout(toast.hideTimeout);
+
+  toast.hideTimeout = setTimeout(function () {
+    toast.classList.remove("show");
+  }, 2200);
+}
+
+document.addEventListener("DOMContentLoaded", initializePeerProfilePage);
