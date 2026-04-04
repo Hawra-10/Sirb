@@ -1,101 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surb | Admin Maintenance</title>
+    <title>Sirb | Admin Maintenance</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* 1. حل مشكلة "الصفحة على جنب" */
+        .main {
+            margin-left: 0 !important; /* نلغي مساحة القائمة الجانبية */
+            width: 100% !important;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px !important;
+        }
+
+        /* 2. تنسيق الهيدر العلوي */
+        .admin-header {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(26, 42, 74, 0.1);
+        }
+
+        /* 3. تنسيق الجدول والبطاقة */
+        .admin-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 1100px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(26, 42, 74, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--muted);
+            font-family: 'Syne';
+            border-bottom: 2px solid var(--bg);
+        }
+
+        td {
+            padding: 20px 15px;
+            border-bottom: 1px solid var(--bg);
+            color: var(--navy);
+        }
+
+        /* 4. تنسيق زر Logout */
+        .logout-btn {
+            background: transparent;
+            border: 1.5px solid var(--navy);
+            color: var(--navy);
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        /* 5. زر الحذف الأحمر */
+        #purgeBtn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: none; /* يختفي بالبداية */
+            margin-top: 20px;
+        }
+    </style>
 </head>
+<body id="home_bd"> <main class="main">
+        <header class="admin-header">
+            <div class="logo-wrap" style="display: flex; align-items: center; gap: 12px;">
+                <img src="logo.png" alt="Sirb" width="40">
+                <span class="logo-name" style="font-size: 24px;">Sirb Admin</span>
+            </div>
+            
+            <h2 style="font-family: 'Syne'; color: var(--navy);">System Maintenance</h2>
 
-<body>
-    <div class="shell">
-        <main class="main">
-            <header class="topbar">
-                <div class="logo-wrap">
-                    <img src="logo.png" alt="Surb Logo" style="width: 40px; height: auto; margin-right: 10px;">
-                    <span class="logo-name">Surb Admin</span>
-                </div>
-                <div style="flex: 1; text-align: center;">
-                    <h2 style="font-family: 'Syne'; color: var(--navy);">System Maintenance</h2>
-                </div>
-                <button onclick="window.location.href='login.html'" class="drawer-logout"
-                    style="margin-top: 0; padding: 10px 20px;">
-                    Logout
-                </button>
-            </header>
+            <button class="logout-btn" onclick="window.location.href='login.html'">Logout</button>
+        </header>
 
-            <div class="results-meta">
-                <div class="results-count">
-                    Outdated Accounts <span>(Older than 7 Years)</span>
-                </div>
-                <button id="purgeBtn" class="drawer-logout"
-                    style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">
-                    Delete Selected Accounts
-                </button>
+        <div class="admin-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="color: var(--muted);">Outdated Accounts (7+ Years)</h3>
+                <button id="purgeBtn">Delete Selected</button>
             </div>
 
-            <div class="card-bg"
-                style="background: var(--card-bg); border-radius: 20px; padding: 20px; box-shadow: 0 4px 24px rgba(26, 42, 74, 0.07);">
-                <table style="width: 100%; border-collapse: collapse; font-family: 'DM Sans';">
-                    <thead>
-                        <tr style="text-align: left; border-bottom: 2px solid var(--bg); color: var(--navy);">
-                            <th style="padding: 15px;"><input type="checkbox" id="selectAll"></th>
-                            <th style="padding: 15px;">Student Name</th>
-                            <th style="padding: 15px;">Registration Date</th>
-                            <th style="padding: 15px;">Last Active</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentTable">
-                        <tr style="border-bottom: 1px solid var(--bg);">
-                            <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
-                            <td style="padding: 15px; font-weight: 600;">Jood Al-Otaibi</td>
-                            <td style="padding: 15px; color: var(--muted);">2015-02-10</td>
-                            <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--bg);">
-                            <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
-                            <td style="padding: 15px; font-weight: 600;">Sara Ahmed</td>
-                            <td style="padding: 15px; color: var(--muted);">2016-11-25</td>
-                            <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
-    <!-- ─── FOOTER ─── -->
-    <footer>
-        © 2025 <span>Sirb</span>. All rights reserved.
-    </footer>
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll"></th>
+                        <th>Student Name</th>
+                        <th>Registration Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTable">
+                    <tr>
+                        <td><input type="checkbox" class="student-checkbox"></td>
+                        <td style="font-weight: 600;">Jood Al-Otaibi</td>
+                        <td>2015-02-10</td>
+                        <td><span class="tag research">Inactive</span></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="student-checkbox"></td>
+                        <td style="font-weight: 600;">Sara Ahmed</td>
+                        <td>2016-11-25</td>
+                        <td><span class="tag research">Inactive</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
     <script>
         const selectAll = document.getElementById('selectAll');
         const checkboxes = document.querySelectorAll('.student-checkbox');
         const purgeBtn = document.getElementById('purgeBtn');
 
+        // تحديد الكل
         selectAll.addEventListener('change', (e) => {
             checkboxes.forEach(cb => cb.checked = e.target.checked);
-            togglePurgeButton();
+            toggleButton();
         });
 
+        // مراقبة الاختيارات لإظهار زر الحذف
         checkboxes.forEach(cb => {
-            cb.addEventListener('change', togglePurgeButton);
+            cb.addEventListener('change', toggleButton);
         });
 
-        function togglePurgeButton() {
+        function toggleButton() {
             const checkedCount = document.querySelectorAll('.student-checkbox:checked').length;
             purgeBtn.style.display = checkedCount > 0 ? 'block' : 'none';
         }
 
+        // تنفيذ الحذف (محاكاة)
         purgeBtn.addEventListener('click', () => {
-            if (confirm('Are you sure you want to delete the selected accounts?')) {
-                alert('Success: Selected accounts have been removed.');
+            if(confirm('Are you sure? This action cannot be undone.')) {
+                alert('Success: Data has been purged.');
                 location.reload();
             }
         });
     </script>
 </body>
-
 </html>
