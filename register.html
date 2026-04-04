@@ -56,7 +56,7 @@
           <input id="ar-password" class="ar-input" type="password" placeholder="••••••••"
             autocomplete="new-password" />
           <button class="ar-toggle-pw" id="ar-toggle-pw" type="button" tabindex="-1" aria-label="Toggle password">
-            <svg id="ar-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            <svg class="ar-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
               <circle cx="12" cy="12" r="3" />
@@ -75,6 +75,13 @@
             <polyline points="22 4 12 14.01 9 11.01" />
           </svg>
           <input id="ar-password-confirm" class="ar-input" type="password" placeholder="••••••••" />
+          <button class="ar-toggle-pw" id="ar-toggle-confirm" type="button" tabindex="-1" aria-label="Toggle password">
+            <svg class="ar-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
         </div>
         <div class="ar-error" id="ar-confirm-error">Passwords do not match.</div>
       </div>
@@ -90,8 +97,7 @@
   </footer>
 
   <script>
-    const togglePw = document.getElementById('ar-toggle-pw');
-    const eyeIcon = document.getElementById('ar-eye-icon');
+    // Elements
     const emailInput = document.getElementById('ar-email');
     const emailError = document.getElementById('ar-email-error');
     const passwordInput = document.getElementById('ar-password');
@@ -100,15 +106,31 @@
     const confirmError = document.getElementById('ar-confirm-error');
     const registerBtn = document.getElementById('ar-login-btn');
 
+    // Toggle Buttons
+    const togglePw = document.getElementById('ar-toggle-pw');
+    const toggleConfirm = document.getElementById('ar-toggle-confirm');
+
+    // SVG Constants
     const EYE_OPEN = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
     const EYE_SHUT = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;
 
-    togglePw.addEventListener('click', () => {
-      const isHidden = passwordInput.type === 'password';
-      passwordInput.type = isHidden ? 'text' : 'password';
-      confirmInput.type = isHidden ? 'text' : 'password';
-      eyeIcon.innerHTML = isHidden ? EYE_SHUT : EYE_OPEN;
-    });
+    /**
+     * Set up password toggle functionality for a specific field
+     */
+    function setupPasswordToggle(button, input) {
+      button.addEventListener('click', () => {
+        const isHidden = input.type === 'password';
+        input.type = isHidden ? 'text' : 'password';
+        
+        // Find the SVG inside the clicked button and change its path
+        const icon = button.querySelector('.ar-eye-icon');
+        icon.innerHTML = isHidden ? EYE_SHUT : EYE_OPEN;
+      });
+    }
+
+    // Initialize both toggles
+    setupPasswordToggle(togglePw, passwordInput);
+    setupPasswordToggle(toggleConfirm, confirmInput);
 
     /* Function to validate email format */
     function validateEmail(email) {
@@ -116,7 +138,7 @@
       return re.test(email.toLowerCase());
     }
 
-    /* Input cleaning */
+    /* Input cleaning (remove errors on type) */
     [emailInput, passwordInput, confirmInput].forEach(input => {
       input.addEventListener('input', () => {
         input.classList.remove('ar-error-input');
@@ -125,6 +147,7 @@
       });
     });
 
+    /* Form Submission */
     registerBtn.addEventListener('click', () => {
       let valid = true;
 
@@ -153,7 +176,11 @@
 
       registerBtn.disabled = true;
       registerBtn.textContent = 'Creating Account...';
-      setTimeout(() => { window.location.href = 'Homepage.html'; }, 1200);
+      
+      // Simulate success
+      setTimeout(() => { 
+        window.location.href = 'Homepage.html'; 
+      }, 1200);
     });
   </script>
 
