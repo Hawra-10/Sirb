@@ -327,4 +327,4 @@ function showRatingSuccessToast() {
   }, 2200);
 }
 
-document.addEventListener("DOMContentLoaded", initializePeerProfilePage);
+
