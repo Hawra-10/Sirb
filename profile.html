@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body id="bd-body-user-profile">
+
+    <div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
+
+    <div class="drawer" id="drawer">
+        <div class="drawer-profile">
+            <div class="profile-avatar">👤</div>
+            <div>
+                <div class="profile-name">Joud BinFaris</div>
+                <div class="profile-role">IT Student</div>
+            </div>
+        </div>
+
+        <a class="drawer-logout" href="login.html">
+            ← Log out
+        </a>
+    </div>
+
+    <main id="bd-peer-profile-page">
+
+        <section id="bd-peer-profile-shell">
+
+            <div id="bd-peer-top-glow"></div>
+
+            <section id="bd-peer-profile-card">
+
+                <header id="bd-peer-profile-header">
+                    <a id="bd-peer-back-button" href="HomePage.html">←</a>
+                    <h1 id="bd-peer-profile-title">My Profile</h1>
+
+                    <button class="hamburger" id="bd-peer-hamburger" onclick="toggleDrawer()" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                </header>
+
+                <section id="bd-peer-profile-top-section">
+
+                    <section id="bd-peer-profile-left-side">
+
+                        <div id="bd-peer-avatar">JB</div>
+
+                        <div class="bd-peer-info-row">
+                            <span class="bd-peer-info-label">Name</span>
+                            <span class="bd-peer-info-value" id="bd-peer-name">Joud BinFaris</span>
+                        </div>
+
+                        <div class="bd-peer-info-row">
+                            <span class="bd-peer-info-label">Major</span>
+                            <span class="bd-peer-info-value" id="bd-peer-major">Information Technology</span>
+                        </div>
+
+                        <div class="bd-peer-info-row">
+                            <span class="bd-peer-info-label">Email</span>
+                            <span class="bd-peer-info-value" id="bd-peer-email">student@ksu.edu.sa</span>
+                        </div>
+
+                    </section>
+
+                    <section id="bd-peer-profile-right-side">
+
+                        <div id="bd-peer-rating-section">
+                            <div id="bd-peer-rating-circle">
+                                <span id="bd-peer-rating-number">4.8</span>
+                            </div>
+                            <div id="bd-peer-rating-details">
+                                <p id="bd-peer-rating-stars">★★★★★</p>
+                                <p id="bd-peer-rating-reviews">Your Average Rating</p>
+                            </div>
+                        </div>
+
+                    </section>
+
+                </section>
+
+                <section id="bd-peer-skills-section">
+                    <h2 id="bd-peer-skills-title">My Skills</h2>
+                    <div id="bd-peer-skills-list">
+                        <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">Leadership</span>
+                        <span class="bd-peer-skill-tag bd-peer-skill-tag-gold">Research</span>
+                        <span class="bd-peer-skill-tag bd-peer-skill-tag-navy">Coding</span>
+                        <span class="bd-peer-skill-tag bd-peer-skill-tag-pink">UI/UX</span>
+                    </div>
+                </section>
+
+                <section id="bd-peer-projects-section">
+                    <h2 id="bd-peer-projects-title">My Projects</h2>
+                    <div id="bd-peer-projects-list">
+                        <div class="bd-peer-project-item">
+                            <span class="bd-peer-project-line"></span>
+                            <span class="bd-peer-project-text">Sirb Platform</span>
+                        </div>
+                        <div class="bd-peer-project-item">
+                            <span class="bd-peer-project-line"></span>
+                            <span class="bd-peer-project-text">Airline Reservation System</span>
+                        </div>
+                        <div class="bd-peer-project-item">
+                            <span class="bd-peer-project-line"></span>
+                            <span class="bd-peer-project-text">Recipe Website</span>
+                        </div>
+                    </div>
+                </section>
+
+                <div id="bd-peer-rate-button-wrapper">
+                    <button id="bd-peer-rate-button" onclick="location.href='edit-profile.html'">Edit Profile</button>
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+    <footer>
+        © 2025 <span>Sirb</span>. All rights reserved.
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
