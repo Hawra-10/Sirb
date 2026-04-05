@@ -31,9 +31,7 @@
         </a>
     </div>
 
-    <!-- =========================
-         RATE MODAL
-    ========================= -->
+    <!-- RATE MODAL -->
     <div id="bd-rate-modal-overlay"></div>
 
     <div id="bd-rate-modal">
@@ -41,7 +39,6 @@
 
             <h2 id="bd-rate-modal-title">Rate Peer</h2>
 
-            <!-- Star rating -->
             <div id="bd-rate-stars-row">
                 <button type="button" class="bd-rate-star" data-value="1">★</button>
                 <button type="button" class="bd-rate-star" data-value="2">★</button>
@@ -50,19 +47,17 @@
                 <button type="button" class="bd-rate-star" data-value="5">★</button>
             </div>
 
-            <!-- Tags / categories -->
             <div id="bd-rate-tags-title">Choose tags:</div>
 
             <div id="bd-rate-tags-list">
-                <button type="button" class="bd-rate-tag-option" data-tag="Leadership">Leadership</button>
-                <button type="button" class="bd-rate-tag-option" data-tag="Research">Research</button>
-                <button type="button" class="bd-rate-tag-option" data-tag="Coding">Coding</button>
-                <button type="button" class="bd-rate-tag-option" data-tag="UI/UX">UI/UX</button>
-                <button type="button" class="bd-rate-tag-option" data-tag="Teamwork">Teamwork</button>
-                <button type="button" class="bd-rate-tag-option" data-tag="Communication">Communication</button>
+                <button type="button" class="bd-rate-tag-option">Leadership</button>
+                <button type="button" class="bd-rate-tag-option">Research</button>
+                <button type="button" class="bd-rate-tag-option">Coding</button>
+                <button type="button" class="bd-rate-tag-option">UI/UX</button>
+                <button type="button" class="bd-rate-tag-option">Teamwork</button>
+                <button type="button" class="bd-rate-tag-option">Communication</button>
             </div>
 
-            <!-- Buttons -->
             <div id="bd-rate-actions">
                 <button type="button" id="bd-rate-cancel-button">Cancel</button>
                 <button type="button" id="bd-rate-submit-button">Submit</button>
@@ -86,8 +81,7 @@
                     <a id="bd-peer-back-button" href="HomePage.html">←</a>
                     <h1 id="bd-peer-profile-title">Peer Profile</h1>
 
-                    <!-- HAMBURGER -->
-                    <button class="hamburger" id="bd-peer-hamburger" onclick="toggleDrawer()" aria-label="Menu">
+                    <button class="hamburger" id="bd-peer-hamburger" onclick="toggleDrawer()">
                         <span></span><span></span><span></span>
                     </button>
                 </header>
@@ -97,27 +91,25 @@
 
                     <section id="bd-peer-profile-left-side">
 
-                        <!-- AVATAR -->
                         <div id="bd-peer-avatar"></div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Name</span>
-                            <span class="bd-peer-info-value" id="bd-peer-name">Bodour Albarqi</span>
+                            <span class="bd-peer-info-value"  id="bd-peer-name">Bodour Albarqi</span>
                         </div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Major</span>
-                            <span class="bd-peer-info-value" id="bd-peer-major">Information Technology</span>
+                            <span class="bd-peer-info-value">Information Technology</span>
                         </div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Email</span>
-                            <span class="bd-peer-info-value" id="bd-peer-email">student@ksu.edu.sa</span>
+                            <span class="bd-peer-info-value">student@ksu.edu.sa</span>
                         </div>
 
                     </section>
 
-                    <!-- RATING -->
                     <section id="bd-peer-profile-right-side">
 
                         <div id="bd-peer-rating-section">
@@ -137,16 +129,30 @@
 
                 </section>
 
-                <!-- SKILLS -->
+                <!-- WHAT OTHERS SAY -->
                 <section id="bd-peer-skills-section">
 
-                    <h2 id="bd-peer-skills-title">Skills</h2>
+                    <h2 id="bd-peer-skills-title">What others say</h2>
 
                     <div id="bd-peer-skills-list">
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">Leadership</span>
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-gold">Research</span>
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-navy">Coding</span>
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-pink">UI/UX</span>
+                    </div>
+
+                </section>
+
+                <!-- SKILLS -->
+                <section id="bd-peer-skills-section-2">
+
+                    <h2 id="bd-peer-skills-title-2">Skills</h2>
+
+                    <div id="bd-peer-skills-list-2">
+                        <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">Communication</span>
+                        <span class="bd-peer-skill-tag bd-peer-skill-tag-gold">Problem Solving</span>
+                        <span class="bd-peer-skill-tag bd-peer-skill-tag-navy">Team Work</span>
+                        <span class="bd-peer-skill-tag bd-peer-skill-tag-pink">Data Analysis</span>
                     </div>
 
                 </section>
@@ -188,7 +194,6 @@
 
     </main>
 
-    <!-- FOOTER -->
     <footer>
         © 2025 <span>Sirb</span>. All rights reserved.
     </footer>
