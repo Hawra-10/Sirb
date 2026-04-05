@@ -8,74 +8,114 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <style>
-       
+      
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .shell {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
         .main {
-            margin-left: 0 !important;
+            margin-left: 0 !important; 
             width: 100% !important;
             padding: 40px !important;
             display: flex;
             flex-direction: column;
             align-items: center;
+            flex: 1;
         }
+
        
-        .admin-content-wrap {
+        .admin-container {
             width: 100%;
             max-width: 1100px;
+        }
+
+       
+        .admin-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+      
+        footer {
+            background: var(--navy);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
         }
     </style>
 </head>
 
-<body id="home-bd"> <div class="main">
-        <div class="admin-content-wrap">
-            
-            <header class="topbar" style="position: static; margin-bottom: 40px;">
-                <div class="logo-wrap">
-                    <img src="logo.png" width="48" alt="Sirb Logo">
-                    <span class="logo-name">Sirb Admin</span>
-                </div>
+<body id="home-bd">
+
+    <div class="shell">
+        <main class="main">
+            <div class="admin-container">
                 
-                <button onclick="window.location.href='login.html'" class="drawer-logout" style="margin: 0;">
-                    ← Log out
-                </button>
-            </header>
+                <header class="admin-topbar">
+                    <div class="logo-wrap">
+                        <img src="logo.png" width="48" alt="Sirb Logo">
+                        <span class="logo-name">Sirb Admin</span>
+                    </div>
+                    
+                    <div class="header-title">
+                        <h2 style="font-family: 'Syne'; color: var(--navy); margin: 0;">System Maintenance</h2>
+                    </div>
 
-            <div class="results-meta">
-                <div class="results-count">
-                    Outdated Accounts <span>(Older than 7 Years)</span>
+                    <button onclick="window.location.href='login.html'" class="drawer-logout" style="margin: 0;">
+                        ← Log out
+                    </button>
+                </header>
+
+                <div class="results-meta">
+                    <div class="results-count">
+                        Outdated Accounts <span>(Older than 7 Years)</span>
+                    </div>
+                    <button id="purgeBtn" class="drawer-logout" style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">
+                        Delete Selected
+                    </button>
                 </div>
-                <button id="purgeBtn" class="drawer-logout" style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">
-                    Delete Selected
-                </button>
-            </div>
 
-            <div style="background: var(--card-bg); border-radius: 20px; padding: 20px; box-shadow: 0 4px 24px rgba(26, 42, 74, 0.07);">
-                <table style="width: 100%; border-collapse: collapse; font-family: 'DM Sans';">
-                    <thead>
-                        <tr style="text-align: left; border-bottom: 2px solid var(--bg); color: var(--navy);">
-                            <th style="padding: 15px;"><input type="checkbox" id="selectAll"></th>
-                            <th style="padding: 15px;">Student Name</th>
-                            <th style="padding: 15px;">Registration Date</th>
-                            <th style="padding: 15px;">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentTable">
-                        <tr style="border-bottom: 1px solid var(--bg);">
-                            <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
-                            <td style="padding: 15px; font-weight: 600;">Jood Al-Otaibi</td>
-                            <td style="padding: 15px; color: var(--muted);">2015-02-10</td>
-                            <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--bg);">
-                            <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
-                            <td style="padding: 15px; font-weight: 600;">Sara Ahmed</td>
-                            <td style="padding: 15px; color: var(--muted);">2016-11-25</td>
-                            <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div style="background: var(--card-bg); border-radius: 20px; padding: 25px; box-shadow: 0 4px 24px rgba(26, 42, 74, 0.07); margin-top: 20px;">
+                    <table style="width: 100%; border-collapse: collapse; font-family: 'DM Sans';">
+                        <thead>
+                            <tr style="text-align: left; border-bottom: 2px solid var(--bg); color: var(--navy);">
+                                <th style="padding: 15px;"><input type="checkbox" id="selectAll"></th>
+                                <th style="padding: 15px;">Student Name</th>
+                                <th style="padding: 15px;">Registration Date</th>
+                                <th style="padding: 15px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTable">
+                            <tr style="border-bottom: 1px solid var(--bg);">
+                                <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
+                                <td style="padding: 15px; font-weight: 600;">Jood Al-Otaibi</td>
+                                <td style="padding: 15px; color: var(--muted);">2015-02-10</td>
+                                <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--bg);">
+                                <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
+                                <td style="padding: 15px; font-weight: 600;">Sara Ahmed</td>
+                                <td style="padding: 15px; color: var(--muted);">2016-11-25</td>
+                                <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-        </div>
+        </main>
     </div>
 
     <footer>
