@@ -105,13 +105,23 @@
   height: 72px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 0 5px rgba(232, 168, 32, .18);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 28px;
   color: #fff;
-  border: 3px solid var(--gold);
-  box-shadow: 0 0 0 5px rgba(232, 168, 32, .18);
+  text-decoration: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 8px rgba(232, 168, 32, .25);
 }
 
 .profile-name {
@@ -566,7 +576,7 @@ footer span {
 #bd-body-peer-profile {
   margin: 0;
   min-height: 100vh;
-  font-family: 'DM Sans', Arial, sans-serif;
+  font-family: 'DM Sans', sans-serif;
   color: var(--text);
   background:
     radial-gradient(circle at top left, rgba(30, 168, 160, 0.12), transparent 25%),
@@ -1380,6 +1390,7 @@ footer span {
   visibility: visible;
   transform: translate(-50%, -50%) scale(1);
 }
+
 #bd-rate-success-toast.show {
   opacity: 1;
   visibility: visible;
@@ -1508,7 +1519,7 @@ footer span {
 
 /*-----------------------------------setup profile-----------------------------*/
 
-.ar-body {
+.ar-body-setup {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   color: var(--text);
@@ -1516,11 +1527,11 @@ footer span {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 60px 24px;
+  padding: 0;
+  margin: 0;
 }
 
-.ar-body::before {
+.ar-body-setup::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -1543,9 +1554,9 @@ footer span {
   box-shadow: 0 8px 56px rgba(26, 42, 74, .11), 0 1.5px 0 rgba(30, 168, 160, .18) inset;
   border: 1.5px solid rgba(30, 168, 160, .13);
   animation: fadeUp .55s cubic-bezier(.4, 0, .2, 1) both;
-   width: 90%;              
-  max-width: 1000px;      
-  margin: 80px auto; 
+  width: 90%;
+  max-width: 1000px;
+  margin: 80px auto;
 }
 
 
@@ -1996,23 +2007,33 @@ footer span {
    BODY LAYOUT
    ================================ */
 .ar-body-login {
-  display: flex;
-  flex-direction: column;       /* stack content + footer */
+   font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
-  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0;
+  margin: 0;
 }
+
+
 
 /* Center the card and allow full width */
 .ar-body-inner {
   flex: 1;
   display: flex;
-  justify-content: center;      /* horizontal center */
-  align-items: center;          /* vertical center */
+  justify-content: center;
+  /* horizontal center */
+  align-items: center;
+  /* vertical center */
   padding: 60px 20px;
 
-  width: 100%;                  /* IMPORTANT: allow full width */
-  max-width: none;              /* remove any width limits */
+  width: 100%;
+  /* IMPORTANT: allow full width */
+  max-width: none;
+  /* remove any width limits */
 }
 
 /* ================================
@@ -2020,7 +2041,8 @@ footer span {
    ================================ */
 .ar-container-login {
   width: 100%;
-  max-width: 650px;             /* bigger desktop size */
+  max-width: 650px;
+  /* bigger desktop size */
   margin: 0 auto;
 
   background: #ffffff;
@@ -2031,7 +2053,8 @@ footer span {
 
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.08);
 
-  box-sizing: border-box;       /* include padding inside width */
+  box-sizing: border-box;
+  /* include padding inside width */
 }
 
 /* ================================
@@ -2075,13 +2098,14 @@ footer span {
    FOOTER (stick to bottom)
    ================================ */
 .ar-footer {
-  width: 100%;                 
+  width: 100%;
   background: var(--navy);
   color: rgba(255, 255, 255, 0.6);
   text-align: center;
   padding: 18px;
   font-size: 0.85rem;
-  margin-top: auto;            /* pushes footer to bottom */
+  margin-top: auto;
+  /* pushes footer to bottom */
 }
 
 .ar-footer span {
@@ -2242,12 +2266,10 @@ footer span {
 .ar-divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(30, 168, 160, 0.3),
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      rgba(30, 168, 160, 0.3),
+      transparent);
   margin-bottom: 2rem;
 }
 
@@ -2360,27 +2382,6 @@ footer span {
 
 /* login page */
 
-.ar-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-}
-
-.ar-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 0% 0%, rgba(30, 168, 160, .12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(26, 42, 74, .10) 0%, transparent 70%);
-  pointer-events: none;
-}
 
 .ar-container {
   position: relative;
@@ -2788,12 +2789,10 @@ footer span {
 .ar-divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(30, 168, 160, 0.3),
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      rgba(30, 168, 160, 0.3),
+      transparent);
   margin-bottom: 2rem;
 }
 
