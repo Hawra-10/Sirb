@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Small addition to handle the edit state appearance */
         .edit-input {
             font-family: 'DM Sans', sans-serif;
             font-size: 14px;
@@ -16,11 +15,40 @@
             padding: 4px 8px;
             width: 100%;
             background: #f8fafc;
+            outline-color: #10b981;
+            margin-bottom: 8px;
         }
         #available-skills-grid .bd-peer-skill-tag {
             cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
+        }
+        .limit-reached, .url-error {
+            color: #ef4444;
+            font-size: 11px;
+            margin-top: 5px;
+            display: none;
+        }
+        /* New Project Styles */
+        .project-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            border: 1px dashed #cbd5e1;
+        }
+        .project-link-icon {
+            font-size: 12px;
+            color: #10b981;
+            text-decoration: none;
+            margin-left: auto;
+            font-weight: bold;
+        }
+        .project-link-icon:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -90,15 +118,13 @@
                     <h2 id="bd-peer-skills-title">My Skills</h2>
                     <div id="bd-peer-skills-list">
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">Leadership</span>
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-gold">Research</span>
                         <span class="bd-peer-skill-tag bd-peer-skill-tag-navy">Coding</span>
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-pink">UI/UX</span>
                     </div>
 
                     <div id="edit-skills-container" style="display: none; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-                        <p style="font-weight: bold; font-size: 13px; color: #475569; margin-bottom: 12px; letter-spacing: 0.5px;">SELECT SKILLS *</p>
-                        <div id="available-skills-grid" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                            </div>
+                        <p style="font-weight: bold; font-size: 13px; color: #475569; margin-bottom: 5px; letter-spacing: 0.5px;">SELECT SKILLS (MAX 3) *</p>
+                        <p id="skill-warning" class="limit-reached">Maximum of 3 skills allowed!</p>
+                        <div id="available-skills-grid" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
                     </div>
                 </section>
 
@@ -109,13 +135,15 @@
                             <span class="bd-peer-project-line"></span>
                             <span class="bd-peer-project-text">Sirb Platform</span>
                         </div>
-                        <div class="bd-peer-project-item">
-                            <span class="bd-peer-project-line"></span>
-                            <span class="bd-peer-project-text">Airline Reservation System</span>
-                        </div>
-                        <div class="bd-peer-project-item">
-                            <span class="bd-peer-project-line"></span>
-                            <span class="bd-peer-project-text">Recipe Website</span>
+                    </div>
+
+                    <div id="add-project-ui" style="display: none;">
+                        <div class="project-input-group">
+                            <p style="font-weight: bold; font-size: 11px; color: #64748b; margin-bottom: 5px;">ADD NEW PROJECT</p>
+                            <input type="text" id="new-project-name" class="edit-input" placeholder="Project Name (e.g. My App)">
+                            <input type="text" id="new-project-url" class="edit-input" placeholder="Google Drive or Docs Link">
+                            <p id="url-error-msg" class="url-error">Invalid link. Please use a Google Drive or Docs URL.</p>
+                            <button onclick="addNewProject()" style="background: #1e293b; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-size: 12px;">+ Add to List</button>
                         </div>
                     </div>
                 </section>
@@ -132,7 +160,6 @@
     </footer>
 
     <script>
-        // --- DRAWER LOGIC ---
         function toggleDrawer() {
             document.getElementById('drawer').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
@@ -142,13 +169,13 @@
             document.getElementById('overlay').classList.remove('active');
         }
 
-        // --- EDIT MODE LOGIC ---
         let isEditMode = false;
-        const availableSkills = ["Leadership", "Research", "Innovation", "Communication", "Problem Solving", "Programming", "Teamwork", "Data Analysis"];
+        const availableSkills = ["Leadership", "Research", "Innovation", "Communication", "Problem Solving", "Programming", "Teamwork", "Data Analysis", "Coding", "UI/UX"];
 
         function toggleEditMode() {
             const btn = document.getElementById('bd-peer-rate-button');
             const skillContainer = document.getElementById('edit-skills-container');
+            const projectUI = document.getElementById('add-project-ui');
             
             const fields = [
                 { id: 'bd-peer-name', parent: 'name-container' },
@@ -159,8 +186,9 @@
             if (!isEditMode) {
                 isEditMode = true;
                 btn.innerText = "Save Changes";
-                btn.style.backgroundColor = "#10b981"; // Emerald green
+                btn.style.backgroundColor = "#10b981"; 
                 skillContainer.style.display = "block";
+                projectUI.style.display = "block";
                 
                 fields.forEach(field => {
                     const element = document.getElementById(field.id);
@@ -175,6 +203,7 @@
                 btn.innerText = "Edit Profile";
                 btn.style.backgroundColor = ""; 
                 skillContainer.style.display = "none";
+                projectUI.style.display = "none";
 
                 fields.forEach(field => {
                     const input = document.getElementById(field.id);
@@ -185,10 +214,44 @@
             }
         }
 
+        function addNewProject() {
+            const nameInput = document.getElementById('new-project-name');
+            const urlInput = document.getElementById('new-project-url');
+            const errorMsg = document.getElementById('url-error-msg');
+            
+            const name = nameInput.value.trim();
+            const url = urlInput.value.trim();
+
+            // Regex: checks for docs.google.com or drive.google.com
+            const googleRegex = /^(https?:\/\/)?(docs\.google\.com|drive\.google\.com)\/.*$/;
+
+            if (name === "" || !googleRegex.test(url)) {
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            errorMsg.style.display = "none";
+
+            const list = document.getElementById('bd-peer-projects-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'bd-peer-project-item';
+            newItem.innerHTML = `
+                <span class="bd-peer-project-line"></span>
+                <span class="bd-peer-project-text">${name}</span>
+                <a href="${url}" target="_blank" class="project-link-icon">🔗 View</a>
+            `;
+
+            list.appendChild(newItem);
+
+            // Reset inputs
+            nameInput.value = "";
+            urlInput.value = "";
+        }
+
         function renderSkillPicker() {
             const grid = document.getElementById('available-skills-grid');
             const activeSkills = Array.from(document.querySelectorAll('#bd-peer-skills-list .bd-peer-skill-tag'))
-                                      .map(s => s.innerText);
+                                      .map(s => s.innerText.trim());
             grid.innerHTML = ''; 
 
             availableSkills.forEach(name => {
@@ -198,8 +261,8 @@
                 
                 const isActive = activeSkills.includes(name);
                 tag.style.opacity = isActive ? "1" : "0.35";
-                tag.style.transform = isActive ? "scale(1.05)" : "scale(1)";
-                tag.style.border = isActive ? "1px solid #1e293b" : "1px dashed #cbd5e1";
+                tag.style.border = isActive ? "1.5px solid #1e293b" : "1px dashed #cbd5e1";
+                tag.style.fontWeight = isActive ? "bold" : "normal";
 
                 tag.onclick = () => {
                     toggleSkill(name);
@@ -211,16 +274,26 @@
 
         function toggleSkill(name) {
             const list = document.getElementById('bd-peer-skills-list');
+            const warning = document.getElementById('skill-warning');
             const currentTags = Array.from(list.querySelectorAll('.bd-peer-skill-tag'));
-            const existing = currentTags.find(t => t.innerText === name);
+            const existing = currentTags.find(t => t.innerText.trim() === name);
 
             if (existing) {
                 existing.remove();
+                warning.style.display = "none";
             } else {
+                if (currentTags.length >= 3) {
+                    warning.style.display = "block";
+                    return; 
+                }
+                warning.style.display = "none";
                 const newTag = document.createElement('span');
-                const colors = ['teal', 'gold', 'navy', 'pink'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                newTag.className = `bd-peer-skill-tag bd-peer-skill-tag-${randomColor}`;
+                let colorClass = 'teal';
+                if (name === "Coding" || name === "Programming") colorClass = 'navy';
+                else if (name === "UI/UX" || name === "Innovation") colorClass = 'pink';
+                else if (name === "Research" || name === "Data Analysis") colorClass = 'gold';
+                
+                newTag.className = `bd-peer-skill-tag bd-peer-skill-tag-${colorClass}`;
                 newTag.innerText = name;
                 list.appendChild(newTag);
             }
