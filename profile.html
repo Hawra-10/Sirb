@@ -57,15 +57,21 @@
 
     <div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
 
+    
     <div class="drawer" id="drawer">
         <div class="drawer-profile">
-            <div class="profile-avatar">👤</div>
+            <a href="profile.html" class="profile-avatar">👤</a>
             <div>
-                <div class="profile-name">Joud BinFaris</div>
-                <div class="profile-role">IT Student</div>
+                <div class="profile-name">
+                    <a class="profile-name" href="profile.html">Joud BinFaris</a>
+                </div>
+                <div class="profile-role">IT</div>
             </div>
         </div>
-        <a class="drawer-logout" href="login.html">← Log out</a>
+
+        <a class="drawer-logout" href="login.html">
+            ← Log out
+        </a>
     </div>
 
     <main id="bd-peer-profile-page">
@@ -312,5 +318,6 @@
             }
         }
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
