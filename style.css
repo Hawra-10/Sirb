@@ -259,13 +259,13 @@
   background: rgba(30, 168, 160, .15);
 }
 
-/* الـ Select الشفاف تماماً فوق الزر */
+
 .filter-btn select {
   position: absolute;
   inset: 0;
-  /* يغطي كامل مساحة الزر */
+ 
   opacity: 0;
-  /* شفاف عشان نشوف النص والـ Style اللي تحته */
+ 
   cursor: pointer;
   width: 100%;
   height: 100%;
@@ -275,30 +275,30 @@
   display: none;
 }
 
-/* نخفيها في الشاشات الكبيرة */
 
-/* 📱 تنسيقات الجوال */
+
+
 @media (max-width: 640px) {
   .filter-text {
     display: none;
-    /* نخفي كلمة Filter والـ chevron */
+    
   }
 
   .filter-icon {
     display: block;
-    /* نظهر الأيقونة اللي طلبتيها */
+    
     color: var(--teal);
   }
 
   .filter-btn {
     padding: 13px 15px;
-    /* تصغير المساحة في الجوال */
+ 
     justify-content: center;
   }
 
   .search-bar input {
     padding: 13px 10px;
-    /* تقليل بادينج الإدخال في الجوال */
+   
   }
 }
 
@@ -417,7 +417,7 @@
   from {
     opacity: 0;
     margin-top: 20px;
-    /* نستخدم margin بدل translateY */
+    
   }
 
   to {
