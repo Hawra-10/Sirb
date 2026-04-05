@@ -120,6 +120,7 @@
   font-size: 16px;
   color: #fff;
   width: 100%;
+  text-decoration: none;
 }
 
 .profile-role {
@@ -1531,7 +1532,7 @@ footer span {
 }
 
 /* ── CONTAINER ── */
-.ar-container {
+.arS-container {
   position: relative;
   z-index: 1;
   background: var(--card-bg);
@@ -1542,7 +1543,11 @@ footer span {
   box-shadow: 0 8px 56px rgba(26, 42, 74, .11), 0 1.5px 0 rgba(30, 168, 160, .18) inset;
   border: 1.5px solid rgba(30, 168, 160, .13);
   animation: fadeUp .55s cubic-bezier(.4, 0, .2, 1) both;
+   width: 90%;              
+  max-width: 1000px;      
+  margin: 80px auto; 
 }
+
 
 @keyframes fadeUp {
   from {
@@ -1984,301 +1989,126 @@ footer span {
 }
 
 
-/* login page */
+/* ///////////////////////////////////////////////////////////////////////login page /////////////////////////////////////////////////////////////////////////////*/
 
-.ar-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+
+/* ================================
+   BODY LAYOUT
+   ================================ */
+.ar-body-login {
+  display: flex;
+  flex-direction: column;       /* stack content + footer */
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Center the card and allow full width */
+.ar-body-inner {
+  flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
+  justify-content: center;      /* horizontal center */
+  align-items: center;          /* vertical center */
+  padding: 60px 20px;
+
+  width: 100%;                  /* IMPORTANT: allow full width */
+  max-width: none;              /* remove any width limits */
 }
 
-.ar-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 0% 0%, rgba(30, 168, 160, .12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(26, 42, 74, .10) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.ar-container {
-  position: relative;
-  z-index: 1;
-  background: var(--card-bg);
-  border-radius: 28px;
-  padding: 52px 56px 48px;
+/* ================================
+   MAIN LOGIN CARD (DESKTOP SIZE)
+   ================================ */
+.ar-container-login {
   width: 100%;
-  max-width: 480px;
-  box-shadow: 0 8px 56px rgba(26, 42, 74, .11), 0 1.5px 0 rgba(30, 168, 160, .18) inset;
-  border: 1.5px solid rgba(30, 168, 160, .13);
-  animation: fadeUp .5s cubic-bezier(.4, 0, .2, 1) both;
+  max-width: 650px;             /* bigger desktop size */
+  margin: 0 auto;
+
+  background: #ffffff;
+  border-radius: 24px;
+
+  /* Balanced padding  */
+  padding: 72px 70px 80px;
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;       /* include padding inside width */
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.ar-brand {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 28px;
-}
-
-.ar-brand-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--teal), var(--navy));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 20px rgba(30, 168, 160, .30);
-}
-
+/* ================================
+   TYPOGRAPHY
+   ================================ */
 .ar-title {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 30px;
-  color: var(--navy);
-  letter-spacing: -.03em;
-  text-align: center;
-  margin-bottom: 8px;
-  position: relative;
-}
-
-.ar-title::after {
-  content: '';
-  display: block;
-  width: 44px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--teal), var(--gold));
-  border-radius: 2px;
-  margin: 10px auto 0;
+  font-size: 40px;
+  margin-bottom: 16px;
 }
 
 .ar-subtitle {
-  text-align: center;
-  font-size: 14px;
-  color: var(--muted);
-  margin-bottom: 32px;
-  margin-top: 6px;
+  font-size: 16px;
+  margin-bottom: 40px;
+  color: #6b7280;
 }
 
-.ar-alert {
-  display: none;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: rgba(224, 88, 88, .08);
-  border: 1.5px solid rgba(224, 88, 88, .28);
-  color: var(--error);
-  font-size: 13.5px;
-  font-weight: 500;
-  margin-bottom: 24px;
-  animation: shakeIn .35s ease;
-}
-
-.ar-alert.ar-visible {
-  display: flex;
-}
-
-.ar-alert::before {
-  content: '⚠';
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-@keyframes shakeIn {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  20% {
-    transform: translateX(-5px);
-  }
-
-  40% {
-    transform: translateX(5px);
-  }
-
-  60% {
-    transform: translateX(-4px);
-  }
-
-  80% {
-    transform: translateX(4px);
-  }
-}
-
+/* ================================
+   FORM SPACING
+   ================================ */
 .ar-field {
-  margin-bottom: 22px;
+  margin-bottom: 30px;
 }
 
-.ar-label {
-  display: block;
-  font-family: 'Syne', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--navy);
-  letter-spacing: .05em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.ar-input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.ar-input-icon {
-  position: absolute;
-  left: 16px;
-  color: var(--muted);
-  pointer-events: none;
-  flex-shrink: 0;
-  transition: color var(--transition);
-}
-
+/* ================================
+   INPUTS (larger for desktop feel)
+   ================================ */
 .ar-input {
-  width: 100%;
-  padding: 14px 18px 14px 44px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  color: var(--text);
-  background: #f7fafb;
-  outline: none;
-  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  padding: 18px 20px 18px 50px;
+  font-size: 16px;
 }
 
-.ar-input:focus {
-  border-color: var(--teal);
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(30, 168, 160, .10);
-}
-
-.ar-input:focus+.ar-input-icon,
-.ar-input-wrap:focus-within .ar-input-icon {
-  color: var(--teal);
-}
-
-.ar-input::placeholder {
-  color: var(--muted);
-}
-
-.ar-input.ar-error-input {
-  border-color: var(--error);
-  box-shadow: 0 0 0 4px rgba(224, 88, 88, .09);
-}
-
-.ar-toggle-pw {
-  position: absolute;
-  right: 14px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  padding: 4px;
-  border-radius: 6px;
-  transition: color var(--transition);
-}
-
-.ar-toggle-pw:hover {
-  color: var(--teal);
-}
-
-.ar-error {
-  font-size: 12.5px;
-  color: var(--error);
-  margin-top: 8px;
-  display: none;
-  align-items: center;
-  gap: 5px;
-}
-
-.ar-error.ar-visible {
-  display: flex;
-}
-
-.ar-error::before {
-  content: '⚠';
-  font-size: 11px;
-}
-
+/* ================================
+   BUTTON (bigger + stronger)
+   ================================ */
 .ar-button {
-  width: 100%;
-  padding: 16px 20px;
-  border-radius: var(--radius);
-  border: none;
-  background: linear-gradient(120deg, var(--teal) 0%, var(--teal-light) 100%);
-  color: #fff;
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 15.5px;
-  letter-spacing: .05em;
-  cursor: pointer;
-  margin-top: 10px;
-  position: relative;
-  overflow: hidden;
-  transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
-  box-shadow: 0 6px 24px rgba(30, 168, 160, .30);
+  padding: 20px;
+  font-size: 18px;
 }
 
-.ar-button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, .14) 50%, transparent 100%);
-  transform: translateX(-100%);
-  transition: transform .45s ease;
+/* ================================
+   FOOTER (stick to bottom)
+   ================================ */
+.ar-footer {
+  width: 100%;                 
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  padding: 18px;
+  font-size: 0.85rem;
+  margin-top: auto;            /* pushes footer to bottom */
 }
 
-.ar-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(30, 168, 160, .36);
-  filter: brightness(1.05);
+.ar-footer span {
+  color: var(--teal);
+  font-weight: 600;
 }
 
-.ar-button:hover::after {
-  transform: translateX(100%);
+/* ================================
+   RESPONSIVE (Tablet)
+   ================================ */
+@media (max-width: 768px) {
+  .ar-container-login {
+    max-width: 100%;
+    padding: 50px 40px;
+  }
+
+  .ar-title {
+    font-size: 32px;
+  }
 }
 
-.ar-button:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 14px rgba(30, 168, 160, .22);
-}
-
-.ar-button:disabled {
-  opacity: .65;
-  cursor: not-allowed;
-  transform: none;
-}
-
-@media (max-width: 520px) {
-  .ar-container {
-    padding: 36px 28px 32px;
+/* ================================
+   RESPONSIVE (Mobile)
+   ================================ */
+@media (max-width: 420px) {
+  .ar-container-login {
+    padding: 36px 24px;
   }
 
   .ar-title {
@@ -2286,7 +2116,7 @@ footer span {
   }
 }
 
-/* Splash page /////////////////////////////*/
+/* ///////////////////////////////////////////////////////////////////////////////// Splash page ///////////////////////////////////////////////////////////////////*/
 
 .sp-body {
   font-family: 'DM Sans', sans-serif;

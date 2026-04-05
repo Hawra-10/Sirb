@@ -12,74 +12,78 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="ar-body">
+<body class="ar-body ar-body-login">
 
-  <div class="ar-container">
+  <div class="ar-body-inner">
 
-    <div class="ar-brand">
-      <div class="ar-brand-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5z" />
-          <path d="M2 17l10 5 10-5" />
-          <path d="M2 12l10 5 10-5" />
-        </svg>
-      </div>
-    </div>
+    <div class="ar-container-login">
 
-    <h1 class="ar-title">Login</h1>
-    <p class="ar-subtitle">Welcome back! Sign in to continue.</p>
-
-    <div class="ar-alert" id="ar-alert">Invalid email or password.</div>
-
-    <div class="ar-field">
-      <label class="ar-label" for="ar-email">Email</label>
-      <div class="ar-input-wrap">
-        <svg class="ar-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="4" width="20" height="16" rx="2" />
-          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-        </svg>
-        <input id="ar-email" class="ar-input" type="email" placeholder="you@example.com" autocomplete="email" />
-      </div>
-      <div class="ar-error" id="ar-email-error">Please enter a valid email address.</div>
-    </div>
-
-    <div class="ar-field">
-      <label class="ar-label" for="ar-password">Password</label>
-      <div class="ar-input-wrap">
-        <svg class="ar-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" />
-          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-        </svg>
-        <input id="ar-password" class="ar-input" type="password" placeholder="••••••••"
-          autocomplete="current-password" />
-        <button class="ar-toggle-pw" id="ar-toggle-pw" type="button" tabindex="-1" aria-label="Toggle password">
-          <svg id="ar-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-            <circle cx="12" cy="12" r="3" />
+      <div class="ar-brand">
+        <div class="ar-brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
           </svg>
-        </button>
+        </div>
       </div>
-      <div class="ar-error" id="ar-password-error">Password cannot be empty.</div>
-    </div>
 
-    <button class="ar-button" id="ar-login-btn">Login</button>
+      <h1 class="ar-title">Login</h1>
+      <p class="ar-subtitle">Welcome back! Sign in to continue.</p>
+
+      <div class="ar-field">
+        <label class="ar-label" for="ar-email">Email</label>
+        <div class="ar-input-wrap">
+          <svg class="ar-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          <input id="ar-email" class="ar-input" type="email" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <div class="ar-error" id="ar-email-error">Please enter a valid email address.</div>
+      </div>
+
+      <div class="ar-field">
+        <label class="ar-label" for="ar-password">Password</label>
+        <div class="ar-input-wrap">
+          <svg class="ar-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <input id="ar-password" class="ar-input" type="password" placeholder="••••••••"
+            autocomplete="current-password" />
+          <button class="ar-toggle-pw" id="ar-toggle-pw" type="button" tabindex="-1" aria-label="Toggle password">
+            <svg id="ar-eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+        </div>
+        <div class="ar-error" id="ar-password-error">Password cannot be empty.</div>
+      </div>
+
+      <button class="ar-button" id="ar-login-btn">Login</button>
+
+    </div>
 
   </div>
 
-  <!-- ─── FOOTER ─── -->
-  <footer>
-    © 2025 <span>Sirb</span>. All rights reserved.
+  <footer class="ar-footer">
+    &copy; 2025 <span>Sirb</span>. All rights reserved.
   </footer>
 
   <script>
-    const togglePw = document.getElementById('ar-toggle-pw');
-    const eyeIcon = document.getElementById('ar-eye-icon');
-    const loginBtn = document.getElementById('ar-login-btn');
+    const togglePw      = document.getElementById('ar-toggle-pw');
+    const eyeIcon       = document.getElementById('ar-eye-icon');
     const passwordInput = document.getElementById('ar-password');
+    const passwordError = document.getElementById('ar-password-error');
+    const emailInput    = document.getElementById('ar-email');
+    const emailError    = document.getElementById('ar-email-error');
+    const loginBtn      = document.getElementById('ar-login-btn');
 
     const EYE_OPEN = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
     const EYE_SHUT = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;
@@ -87,34 +91,54 @@
     togglePw.addEventListener('click', () => {
       const isHidden = passwordInput.type === 'password';
       passwordInput.type = isHidden ? 'text' : 'password';
-      eyeIcon.innerHTML = isHidden ? EYE_SHUT : EYE_OPEN;
+      eyeIcon.innerHTML  = isHidden ? EYE_SHUT : EYE_OPEN;
     });
 
-    const emailInput = document.getElementById('ar-email');
-    const emailError = document.getElementById('ar-email-error');
-
-    function isValidEmail(val) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
-    }
+    /* Clear errors as user types */
+    passwordInput.addEventListener('input', () => {
+      passwordInput.classList.remove('ar-error-input');
+      passwordError.classList.remove('ar-visible');
+    });
 
     emailInput.addEventListener('input', () => {
       emailInput.classList.remove('ar-error-input');
       emailError.classList.remove('ar-visible');
     });
 
+    function isValidEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+    }
+
     loginBtn.addEventListener('click', () => {
+      let valid = true;
+
+      /* 1. Email format check */
       if (!isValidEmail(emailInput.value)) {
         emailInput.classList.add('ar-error-input');
         emailError.classList.add('ar-visible');
-        return;
+        valid = false;
+      } else {
+        emailInput.classList.remove('ar-error-input');
+        emailError.classList.remove('ar-visible');
       }
-      emailInput.classList.remove('ar-error-input');
-      emailError.classList.remove('ar-visible');
-      loginBtn.disabled = true;
+
+      /* 2. Password empty check — only frontend, no backend */
+      if (!passwordInput.value.trim()) {
+        passwordInput.classList.add('ar-error-input');
+        passwordError.classList.add('ar-visible');
+        valid = false;
+      } else {
+        passwordInput.classList.remove('ar-error-input');
+        passwordError.classList.remove('ar-visible');
+      }
+
+      if (!valid) return;
+
+      loginBtn.disabled    = true;
       loginBtn.textContent = 'Redirecting…';
       setTimeout(() => { window.location.href = 'Homepage.html'; }, 900);
     });
   </script>
-</body>
 
+</body>
 </html>
