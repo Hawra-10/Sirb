@@ -1,5 +1,35 @@
 <?php
+
+session_start();
+
 include 'db_connect.php';
+require_once 'rating_helper.php';
+
+
+// check if logged in
+if (!isset($_SESSION['userID'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Get the logged-in user's data
+$logged_user_ID = $_SESSION['userID'];
+
+$userQuery = "SELECT name, major FROM Student WHERE student_ID = :id";
+$userStmt = $pdo->prepare($userQuery);
+$userStmt->execute(['id' => $logged_user_ID]);
+$currentUser = $userStmt->fetch();
+
+//  Fallback if user is not found 
+if (!$currentUser) {
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
+
+$currentUserName = htmlspecialchars($currentUser['name']);
+$currentUserMajor = htmlspecialchars($currentUser['major']);
+
 
 //  Capture inputs from the GET form
 $search_query_raw = isset($_GET['student_name']) ? trim($_GET['student_name']) : "";
@@ -52,9 +82,9 @@ $studentCount = count($result);
                 <a href="profile.php" class="profile-avatar">👤</a>
                 <div>
                     <div class="profile-name">
-                        <a class="profile-name" href="profile.php">Joud BinFaris</a>
+                        <a class="profile-name" href="profile.php"><?php echo $currentUserName; ?></a>
                     </div>
-                    <div class="profile-role">IT</div>
+                    <div class="profile-role"><?php echo $currentUserMajor; ?></div>
                 </div>
             </div>
 
@@ -108,7 +138,13 @@ $studentCount = count($result);
 
             <!-- RESULTS META -->
             <div class="results-meta">
-                <div class="results-count"><span id="countNum">8</span> Students</div>
+                <div class="results-count">
+                    <span id="countNum"><?php echo $studentCount; ?></span> Students
+                </div>
+
+                <?php if ($selected_major !== 'all' || !empty($search_query)): ?>
+                    <a href="homepage.php" class="clear-filters">Clear All ✕</a>
+                <?php endif; ?>
             </div>
 
             <!-- CARD GRID -->
@@ -124,6 +160,10 @@ $studentCount = count($result);
                         $name = htmlspecialchars($row["name"]);
                         $major = htmlspecialchars($row["major"]);
                         $student_id = $row["student_ID"];
+                        $ratingData = getStudentRating($pdo, $row['student_ID']);
+                        $average = $ratingData['average'];
+                        $count = $ratingData['count'];
+                        $topTags = getTopStudentTags($pdo, $row['student_ID']);
 
                         // Generate Initials for the Avatar
                         $parts = explode(' ', $name);
@@ -136,15 +176,20 @@ $studentCount = count($result);
             <div class='card-name'>{$name}</div>
             <div class='card-major'>{$major}</div>
             <div class='card-stars'>
-                <span class='star filled'>★</span>
-                <span class='star filled'>★</span>
-                <span class='star filled'>★</span>
-                <span class='star filled'>★</span>
-                <span class='star'>★</span>
-            </div>
+        " . renderStars($average) . "
+        <span style='font-size: 11px; color: var(--muted); margin-left: 4px;'>({$count})</span>
+    </div>
             <div class='tag-row'>
-                <span class='tag research'>CCIS</span>
-            </div>
+    <?php if (!empty($topTags)): ?>
+        <?php foreach ($topTags as $tagName): ?>
+            <span class='tag <?php echo getTagClass($tagName); ?>'>
+                <?php echo htmlspecialchars($tagName); ?>
+            </span>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <span class='tag' style='opacity: 0.5;'>No tags yet</span>
+    <?php endif; ?>
+</div>
         </a>";
                     }
                 } else {
