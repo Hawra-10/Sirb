@@ -27,10 +27,10 @@
       <div class="ar-divider"></div>
 
       <div class="ar-actions">
-        <a href="register.html" class="ar-btn-signup">Register</a>
+        <a href="register.php" class="ar-btn-signup">Register</a>
         <p class="ar-login-line">
           Already have an account?
-          <a href="login.html" class="ar-login-link">Log in</a>
+          <a href="login.php" class="ar-login-link">Log in</a>
         </p>
       </div>
 

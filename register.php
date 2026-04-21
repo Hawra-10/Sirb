@@ -179,7 +179,7 @@
       
       // Simulate success
       setTimeout(() => { 
-        window.location.href = 'setupProfile.html'; 
+        window.location.href = 'setupProfile.php'; 
       }, 1200);
     });
   </script>

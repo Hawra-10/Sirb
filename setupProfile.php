@@ -260,7 +260,7 @@
         document.getElementById('ar-success').classList.add('ar-visible');
         document.getElementById('ar-done-btn').style.opacity = '.6';
         document.getElementById('ar-done-btn').disabled = true;
-        setTimeout(() => { window.location.href = 'Homepage.html'; }, 1200);
+        setTimeout(() => { window.location.href = 'Homepage.php'; }, 1200);
       } else {
         document.getElementById('ar-success').classList.remove('ar-visible');
       }

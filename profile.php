@@ -60,16 +60,16 @@
     
     <div class="drawer" id="drawer">
         <div class="drawer-profile">
-            <a href="profile.html" class="profile-avatar">👤</a>
+            <a href="profile.php" class="profile-avatar">👤</a>
             <div>
                 <div class="profile-name">
-                    <a class="profile-name" href="profile.html">Joud BinFaris</a>
+                    <a class="profile-name" href="profile.php">Joud BinFaris</a>
                 </div>
                 <div class="profile-role">IT</div>
             </div>
         </div>
 
-        <a class="drawer-logout" href="login.html">
+        <a class="drawer-logout" href="login.php">
             ← Log out
         </a>
     </div>
@@ -80,7 +80,7 @@
 
             <section id="bd-peer-profile-card">
                 <header id="bd-peer-profile-header">
-                    <a id="bd-peer-back-button" href="HomePage.html">←</a>
+                    <a id="bd-peer-back-button" href="HomePage.php">←</a>
                     <h1 id="bd-peer-profile-title">My Profile</h1>
                     <button class="hamburger" id="bd-peer-hamburger" onclick="toggleDrawer()" aria-label="Menu">
                         <span></span><span></span><span></span>

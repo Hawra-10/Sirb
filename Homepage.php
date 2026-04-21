@@ -19,16 +19,16 @@
     <!-- SIDE DRAWER -->
     <div class="drawer" id="drawer">
         <div class="drawer-profile">
-            <a href="profile.html" class="profile-avatar">👤</a>
+            <a href="profile.php" class="profile-avatar">👤</a>
             <div>
                 <div class="profile-name">
-                    <a class="profile-name" href="profile.html">Joud BinFaris</a>
+                    <a class="profile-name" href="profile.php">Joud BinFaris</a>
                 </div>
                 <div class="profile-role">IT</div>
             </div>
         </div>
 
-        <a class="drawer-logout" href="login.html">
+        <a class="drawer-logout" href="login.php">
             ← Log out
         </a>
     </div>
@@ -87,7 +87,7 @@
         <div class="card-grid" id="cardGrid">
 
 
-            <a href="PeerProfile.html" class="student-card">
+            <a href="PeerProfile.php" class="student-card">
                 <div class="card-avatar">BA</div>
                 <div class="card-name">Boudour AlBargi</div>
                 <div class="card-major">IT</div>
@@ -104,7 +104,7 @@
                 </div>
             </a>
 
-            <a href="PeerProfile.html" class="student-card">
+            <a href="PeerProfile.php" class="student-card">
                 <div class="card-avatar">AA</div>
                 <div class="card-name">Aroub Alswayyed</div>
                 <div class="card-major">IT</div>
@@ -121,7 +121,7 @@
                 </div>
             </a>
 
-            <a href="PeerProfile.html" class="student-card">
+            <a href="PeerProfile.php" class="student-card">
                 <div class="card-avatar">HA</div>
                 <div class="card-name">Hawra Alhammad</div>
                 <div class="card-major">IT</div>
@@ -137,7 +137,7 @@
                 </div>
             </a>
 
-            <a href="PeerProfile.html" class="student-card">
+            <a href="PeerProfile.php" class="student-card">
                 <div class="card-avatar">JM</div>
                 <div class="card-name">Joud Mutrid</div>
                 <div class="card-major">IT</div>
@@ -153,7 +153,7 @@
                 </div>
             </a>
 
-            <a href="PeerProfile.html" class="student-card">
+            <a href="PeerProfile.php" class="student-card">
                 <div class="card-avatar">LA</div>
                 <div class="card-name">Layla AlRashid</div>
                 <div class="card-major">CS</div>
@@ -170,7 +170,7 @@
                 </div>
             </a>
 
-            <a href="PeerProfile.html" class="student-card">
+            <a href="PeerProfile.php" class="student-card">
                 <div class="card-avatar">SA</div>
                 <div class="card-name">Sara AlKhalid</div>
                 <div class="card-major">IS</div>
@@ -187,7 +187,7 @@
                 </div>
             </a>
 
-            <a href="PeerProfile.html" class="student-card">
+            <a href="PeerProfile.php" class="student-card">
                 <div class="card-avatar">NA</div>
                 <div class="card-name">Noura Alharbi</div>
                 <div class="card-major">SWE</div>
@@ -203,7 +203,7 @@
                 </div>
             </a>
 
-            <a href="profile.html" class="student-card">
+            <a href="profile.php" class="student-card">
                 <div class="card-avatar">LB</div>
                 <div class="card-name">Lina Bader</div>
                 <div class="card-major">SWE</div>

@@ -74,7 +74,7 @@
                         <h2 style="font-family: 'Syne'; color: var(--navy); margin: 0;">System Maintenance</h2>
                     </div>
 
-                    <button onclick="window.location.href='login.html'" class="drawer-logout" style="margin: 0;">
+                    <button onclick="window.location.href='login.php'" class="drawer-logout" style="margin: 0;">
                         ← Log out
                     </button>
                 </header>

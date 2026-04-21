@@ -136,7 +136,7 @@
 
       loginBtn.disabled    = true;
       loginBtn.textContent = 'Redirecting…';
-      setTimeout(() => { window.location.href = 'Homepage.html'; }, 900);
+      setTimeout(() => { window.location.href = 'Homepage.php'; }, 900);
     });
   </script>
 
