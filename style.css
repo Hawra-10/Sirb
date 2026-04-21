@@ -238,6 +238,27 @@
   color: var(--muted);
 }
 
+/* ── EMPTY STATE ── */
+.empty {
+  grid-column: 1/-1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  color: var(--muted);
+  gap: 12px;
+}
+
+.empty .empty-icon {
+  font-size: 48px;
+  opacity: .4;
+}
+
+.empty p {
+  font-size: 15px;
+}
+
 /* Filter */
 .filter-btn {
   display: flex;
@@ -275,6 +296,18 @@
   display: none;
 }
 
+.clear-filters {
+    font-size: 13px;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 10px;
+    transition: opacity 0.2s;
+}
+
+.clear-filters:hover {
+    opacity: 0.7;
+}
 
 
 
