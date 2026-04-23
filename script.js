@@ -352,20 +352,21 @@ function initLiveSearch() {
         const query = searchInput.value;
         const major = majorSelect.value;
         
-        // Show/Hide Clear button based on input
+        // 1. Show/Hide Clear button based on input
         if (query.length > 0 || major !== 'all') {
             clearBtn.style.display = 'inline-block';
         } else {
             clearBtn.style.display = 'none';
         }
-
+        
+        // 3. Fetch Data
         fetch(`fetch_students.php?student_name=${encodeURIComponent(query)}&major=${major}`)
             .then(response => response.json())
             .then(data => {
                 cardGrid.innerHTML = data.html;
                 countNum.textContent = data.count;
-                
-            });
+            })
+            .catch(err => console.error("Error fetching students:", err));
     };
 
     // Trigger on typing (input) and on changing dropdown (change)
@@ -378,12 +379,12 @@ function initLiveSearch() {
         majorSelect.value = 'all';
         performSearch(); // Refresh the grid to "All"
     });
-    
-    performSearch();
+
+    performSearch(); 
 }
 
-// Update your DOMContentLoaded to include this:
+// Ensure init is called after DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
     initializeHomePage();
-    initLiveSearch(); // Start the live search
+    initLiveSearch(); 
 });
