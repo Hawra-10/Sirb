@@ -1,3 +1,12 @@
+<?php
+require 'db_connect.php';
+
+// جلب الطلاب الذين سجلوا قبل 7 سنوات أو أكثر
+$query = "SELECT student_ID, name, registrationDate FROM student 
+          WHERE registrationDate < DATE_SUB(CURDATE(), INTERVAL 7 YEAR)";
+$stmt = $pdo->query($query);
+$students = $stmt->fetchAll();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,86 +15,33 @@
     <title>Sirb | Admin Maintenance</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-
     <style>
-      
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .shell {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .main {
-            margin-left: 0 !important; 
-            width: 100% !important;
-            padding: 40px !important;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        }
-
-       
-        .admin-container {
-            width: 100%;
-            max-width: 1100px;
-        }
-
-       
-        .admin-topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 50px;
-        }
-
-      
-        footer {
-            background: var(--navy);
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            width: 100%;
-        }
+        body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; }
+        .shell { flex: 1; display: flex; flex-direction: column; }
+        .main { margin-left: 0 !important; width: 100% !important; padding: 40px !important; display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .admin-container { width: 100%; max-width: 1100px; }
+        .admin-topbar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 50px; }
+        footer { background: var(--navy); color: white; text-align: center; padding: 20px 0; width: 100%; }
     </style>
 </head>
-
-<body id="home-bd">
-
+<body>
     <div class="shell">
         <main class="main">
             <div class="admin-container">
-                
                 <header class="admin-topbar">
                     <div class="logo-wrap">
                         <img src="logo.png" width="48" alt="Sirb Logo">
                         <span class="logo-name">Sirb Admin</span>
                     </div>
-                    
                     <div class="header-title">
                         <h2 style="font-family: 'Syne'; color: var(--navy); margin: 0;">System Maintenance</h2>
                     </div>
-
-                    <button onclick="window.location.href='login.php'" class="drawer-logout" style="margin: 0;">
-                        ← Log out
-                    </button>
+                    <button onclick="window.location.href='login.php'" class="drawer-logout" style="margin-top: 0; padding: 10px 20px;">Logout</button>
                 </header>
 
                 <div class="results-meta">
-                    <div class="results-count">
-                        Outdated Accounts <span>(Older than 7 Years)</span>
-                    </div>
-                    <button id="purgeBtn" class="drawer-logout" style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">
-                        Delete Selected
-                    </button>
+                    <div class="results-count">Outdated Accounts <span>(Older than 7 Years)</span></div>
+                    <button id="purgeBtn" class="drawer-logout" style="background: #e74c3c; border-color: #c0392b; color: white; display: none;">Delete Selected</button>
                 </div>
 
                 <div style="background: var(--card-bg); border-radius: 20px; padding: 25px; box-shadow: 0 4px 24px rgba(26, 42, 74, 0.07); margin-top: 20px;">
@@ -99,29 +55,21 @@
                             </tr>
                         </thead>
                         <tbody id="studentTable">
+                            <?php foreach ($students as $student): ?>
                             <tr style="border-bottom: 1px solid var(--bg);">
-                                <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
-                                <td style="padding: 15px; font-weight: 600;">Jood Al-Otaibi</td>
-                                <td style="padding: 15px; color: var(--muted);">2015-02-10</td>
+                                <td style="padding: 15px;"><input type="checkbox" class="student-checkbox" value="<?php echo $student['student_ID']; ?>"></td>
+                                <td style="padding: 15px; font-weight: 600;"><?php echo htmlspecialchars($student['name']); ?></td>
+                                <td style="padding: 15px; color: var(--muted);"><?php echo $student['registrationDate']; ?></td>
                                 <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
                             </tr>
-                            <tr style="border-bottom: 1px solid var(--bg);">
-                                <td style="padding: 15px;"><input type="checkbox" class="student-checkbox"></td>
-                                <td style="padding: 15px; font-weight: 600;">Sara Ahmed</td>
-                                <td style="padding: 15px; color: var(--muted);">2016-11-25</td>
-                                <td style="padding: 15px;"><span class="tag research">Inactive</span></td>
-                            </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </main>
     </div>
-
-    <footer>
-        © 2025 <span>Sirb</span>. All rights reserved.
-    </footer>
-
+    <footer>© 2025 <span>Sirb</span>. All rights reserved.</footer>
     <script>
         const selectAll = document.getElementById('selectAll');
         const checkboxes = document.querySelectorAll('.student-checkbox');
@@ -132,9 +80,7 @@
             togglePurgeButton();
         });
 
-        checkboxes.forEach(cb => {
-            cb.addEventListener('change', togglePurgeButton);
-        });
+        checkboxes.forEach(cb => { cb.addEventListener('change', togglePurgeButton); });
 
         function togglePurgeButton() {
             const checkedCount = document.querySelectorAll('.student-checkbox:checked').length;
@@ -142,9 +88,13 @@
         }
 
         purgeBtn.addEventListener('click', () => {
-            if (confirm('Are you sure you want to delete the selected accounts?')) {
-                alert('Success: Selected accounts have been removed.');
-                location.reload();
+            const selectedIds = Array.from(document.querySelectorAll('.student-checkbox:checked')).map(cb => cb.value);
+            if (confirm('Are you sure you want to delete these accounts?')) {
+                fetch('delete_students.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ ids: selectedIds })
+                }).then(() => location.reload());
             }
         });
     </script>
