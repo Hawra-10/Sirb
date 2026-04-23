@@ -344,12 +344,20 @@ function initLiveSearch() {
     const majorSelect = document.querySelector('select[name="major"]');
     const cardGrid = document.getElementById('cardGrid');
     const countNum = document.getElementById('countNum');
-
+    const clearBtn = document.getElementById('clearBtn');
+    
     if (!searchInput || !majorSelect) return;
 
     const performSearch = () => {
         const query = searchInput.value;
         const major = majorSelect.value;
+        
+        // Show/Hide Clear button based on input
+        if (query.length > 0 || major !== 'all') {
+            clearBtn.style.display = 'inline-block';
+        } else {
+            clearBtn.style.display = 'none';
+        }
 
         fetch(`fetch_students.php?student_name=${encodeURIComponent(query)}&major=${major}`)
             .then(response => response.json())
@@ -363,6 +371,15 @@ function initLiveSearch() {
     // Trigger on typing (input) and on changing dropdown (change)
     searchInput.addEventListener('input', performSearch);
     majorSelect.addEventListener('change', performSearch);
+    
+    // Clear Button Logic
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        majorSelect.value = 'all';
+        performSearch(); // Refresh the grid to "All"
+    });
+    
+    performSearch();
 }
 
 // Update your DOMContentLoaded to include this:
