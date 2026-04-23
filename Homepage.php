@@ -1,10 +1,8 @@
 <?php
-
 session_start();
 
 include 'db_connect.php';
 require_once 'rating_helper.php';
-
 
 // check if logged in
 if (!isset($_SESSION['userID'])) {
@@ -29,33 +27,6 @@ if (!$currentUser) {
 
 $currentUserName = htmlspecialchars($currentUser['name']);
 $currentUserMajor = htmlspecialchars($currentUser['major']);
-
-
-//  Capture inputs from the GET form
-$search_query_raw = isset($_GET['student_name']) ? trim($_GET['student_name']) : "";
-$selected_major = isset($_GET['major']) ? $_GET['major'] : "all";
-
-// Base Query Logic
-$sql_query = "SELECT * FROM Student WHERE 1=1";
-$params = [];
-
-// Add Name Filter 
-if (!empty($search_query_raw)) {
-    $sql_query .= " AND name LIKE :name";
-    $params['name'] = "%" . $search_query_raw . "%";
-}
-
-// Add Major Filter
-if ($selected_major !== "all" && !empty($selected_major)) {
-    $sql_query .= " AND major = :major";
-    $params['major'] = $selected_major;
-}
-
-// Execute the Query
-$stmt = $pdo->prepare($sql_query);
-$stmt->execute($params);
-$result = $stmt->fetchAll(); // Gets all matching students
-$studentCount = count($result);
 ?>
 
 <!DOCTYPE html>
@@ -120,12 +91,12 @@ $studentCount = count($result);
 
                         <span class="filter-text">Filter <span class="chevron">▾</span></span>
 
-                        <select name="major" onchange="this.form.submit()">
-                            <option value="all" <?php echo ($selected_major == 'all') ? 'selected' : ''; ?>>All</option>
-                            <option value="IT" <?php echo ($selected_major == 'IT') ? 'selected' : ''; ?>>IT</option>
-                            <option value="CS" <?php echo ($selected_major == 'CS') ? 'selected' : ''; ?>>CS</option>
-                            <option value="IS" <?php echo ($selected_major == 'IS') ? 'selected' : ''; ?>>IS</option>
-                            <option value="SWE" <?php echo ($selected_major == 'SWE') ? 'selected' : ''; ?>>SWE</option>
+                        <select name="major" id="majorSelect">
+                            <option value="all" selected>All</option>
+                            <option value="IT">IT</option>
+                            <option value="CS">CS</option>
+                            <option value="IS">IS</option>
+                            <option value="SWE">SWE</option>
                         </select>
                     </div>
                 </form>
@@ -139,76 +110,32 @@ $studentCount = count($result);
             <!-- RESULTS META -->
             <div class="results-meta">
                 <div class="results-count">
-                    <span id="countNum"><?php echo $studentCount; ?></span> Students
+                    <span id="countNum">0</span> Students
                 </div>
 
-                <?php if ($selected_major !== 'all' || !empty($search_query)): ?>
-                    <a href="homepage.php" class="clear-filters">Clear All ✕</a>
-                <?php endif; ?>
+                <button type="button" id="clearBtn" class="clear-filters" style="display: none; background: none; border: none; cursor: pointer;">
+                    Clear All ✕
+                </button>
             </div>
-
-            <!-- CARD GRID -->
-
-            <div class="card-grid" id="cardGrid">
-
-
-                <?php
-                // Check if results exist
-                if ($studentCount > 0) {
-                    // Loop through each student record
-                    foreach ($result as $row) {
-                        $name = htmlspecialchars($row["name"]);
-                        $major = htmlspecialchars($row["major"]);
-                        $student_id = $row["student_ID"];
-                        $ratingData = getStudentRating($pdo, $row['student_ID']);
-                        $average = $ratingData['average'];
-                        $count = $ratingData['count'];
-                        $topTags = getTopStudentTags($pdo, $row['student_ID']);
-
-                        // Generate Initials for the Avatar
-                        $parts = explode(' ', $name);
-                        $initials = strtoupper(substr($parts[0], 0, 1) . (isset($parts[1]) ? substr($parts[1], 0, 1) : ''));
-
-                        // Display the Card
-                        echo "
-        <a href='PeerProfile.php?id={$student_id}' class='student-card'>
-            <div class='card-avatar'>{$initials}</div>
-            <div class='card-name'>{$name}</div>
-            <div class='card-major'>{$major}</div>
-            <div class='card-stars'>
-        " . renderStars($average) . "
-        <span style='font-size: 11px; color: var(--muted); margin-left: 4px;'>({$count})</span>
-    </div>
-            <div class='tag-row'>
-    <?php if (!empty($topTags)): ?>
-        <?php foreach ($topTags as $tagName): ?>
-            <span class='tag <?php echo getTagClass($tagName); ?>'>
-                <?php echo htmlspecialchars($tagName); ?>
-            </span>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <span class='tag' style='opacity: 0.5;'>No tags yet</span>
-    <?php endif; ?>
-</div>
-        </a>";
-                    }
-                } else {
-                    echo "
-        <div class='empty'>
-            <div class='empty-icon'>🔍</div>
-            <p>No students found matching your criteria.</p>
-        </div>";
-                }
-                ?>
-            </div>
-
         </div>
-        <!-- ─── FOOTER ─── -->
-        <footer>
-            © 2025 <span>Sirb</span>. All rights reserved.
-        </footer>
 
-        <script src="script.js"></script>
-    </body>
+        <!-- CARD GRID -->
+
+        <div class="card-grid" id="cardGrid">
+            <div class="empty">
+                <p>Loading students...</p>
+            </div>
+        </div>
+
+    </div>
+    
+    
+    <!-- ─── FOOTER ─── -->
+    <footer>
+        © 2025 <span>Sirb</span>. All rights reserved.
+    </footer>
+
+    <script src="script.js"></script>
+</body>
 
 </html>

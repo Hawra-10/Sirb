@@ -328,3 +328,45 @@ function showRatingSuccessToast() {
 }
 
 
+/* ─────────────────────────────────────────────
+    Backend
+───────────────────────────────────────────── */
+
+
+
+
+/* ─────────────────────────────────────────────
+    AJAX LIVE SEARCH
+───────────────────────────────────────────── */
+
+function initLiveSearch() {
+    const searchInput = document.querySelector('input[name="student_name"]');
+    const majorSelect = document.querySelector('select[name="major"]');
+    const cardGrid = document.getElementById('cardGrid');
+    const countNum = document.getElementById('countNum');
+
+    if (!searchInput || !majorSelect) return;
+
+    const performSearch = () => {
+        const query = searchInput.value;
+        const major = majorSelect.value;
+
+        fetch(`fetch_students.php?student_name=${encodeURIComponent(query)}&major=${major}`)
+            .then(response => response.json())
+            .then(data => {
+                cardGrid.innerHTML = data.html;
+                countNum.textContent = data.count;
+                
+            });
+    };
+
+    // Trigger on typing (input) and on changing dropdown (change)
+    searchInput.addEventListener('input', performSearch);
+    majorSelect.addEventListener('change', performSearch);
+}
+
+// Update your DOMContentLoaded to include this:
+document.addEventListener("DOMContentLoaded", function () {
+    initializeHomePage();
+    initLiveSearch(); // Start the live search
+});
