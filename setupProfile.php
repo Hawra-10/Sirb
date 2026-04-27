@@ -3,6 +3,7 @@ session_start();
 require 'db_connect.php';
 
 if (!isset($_SESSION['userID'])) {
+    $_SESSION['error'] = "Please login first.";
     header("Location: login.php");
     exit();
 }
