@@ -70,6 +70,44 @@ function getTopStudentTags($pdo, $student_id) {
     return $stmt->fetchAll(PDO::FETCH_COLUMN); // Returns simple array of names like ['Coding', 'Teamwork']
 }
 
+
+
+
+
+
+/**
+ * Retrieves all tags assigned to a student along with the number of times each tag was selected.
+ * The results are sorted in descending order based on tag frequency, allowing the most common
+ * (top-rated) tags to be prioritized and displayed more prominently in the UI.
+ *
+ * @param PDO $pdo The database connection
+ * @param int $student_id The ID of the student
+ * @return array List of tags with their counts (e.g., [['name' => 'Coding', 'tag_count' => 3], ...])
+ */
+function getStudentTagCounts($pdo, $student_id) {
+    $sql = "SELECT rt.name, COUNT(prt.tag_ID) as tag_count
+            FROM ratetag rt
+            JOIN peerratetag prt ON rt.tag_ID = prt.tag_ID
+            JOIN peerrate pr ON prt.rate_ID = pr.rate_ID
+            WHERE pr.Rated_student_ID = :id
+            GROUP BY rt.tag_ID, rt.name
+            ORDER BY tag_count DESC";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id' => $student_id]);
+
+    return $stmt->fetchAll();
+}
+
+
+
+
+
+
+
+
+
+
 /**
  * Maps the Tag Name to the correct CSS class
  */

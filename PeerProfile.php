@@ -59,7 +59,9 @@ $projectsStmt->execute([$peerID]);
 $projects = $projectsStmt->fetchAll();
 
 $rating = getStudentRating($pdo, $peerID);
-$topTags = getTopStudentTags($pdo, $peerID);
+
+// ✅ التعديل هنا فقط
+$tagCounts = getStudentTagCounts($pdo, $peerID);
 
 function h($value) {
     return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
@@ -243,19 +245,20 @@ $degree = ($average / 5) * 360;
 
                     <h2 id="bd-peer-skills-title">What others say</h2>
 
-                    <div id="bd-peer-skills-list">
-                        <?php if (!empty($topTags)): ?>
-                            <?php foreach ($topTags as $tag): ?>
-                                <span class="bd-peer-skill-tag <?php echo skillClass($tag); ?>">
-                                    <?php echo h($tag); ?>
-                                </span>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">
-                                No ratings yet
-                            </span>
-                        <?php endif; ?>
-                    </div>
+                   <div id="bd-peer-skills-list">
+    <?php if (!empty($tagCounts)): ?>
+        <?php foreach ($tagCounts as $index => $tag): ?>
+            <span class="bd-peer-skill-tag <?php echo skillClass($tag['name']); ?> <?php echo $index === 0 ? 'bd-peer-top-tag' : ''; ?>">
+                <?php echo h($tag['name']); ?>
+              <span class="bd-peer-tag-count">(<?php echo $tag['tag_count']; ?>)</span>
+            </span>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">
+            No ratings yet
+        </span>
+    <?php endif; ?>
+</div>
 
                 </section>
 

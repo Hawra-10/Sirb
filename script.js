@@ -268,7 +268,8 @@ function submitPeerRating() {
 
       updatePeerRatingUIFromDatabase(data.average, data.count);
       closeRateModal();
-      showRatingSuccessToast();
+showRatingSuccessToast();
+location.reload();
     })
     .catch(error => {
       console.error(error);
