@@ -1,3 +1,102 @@
+<?php
+session_start();
+
+require 'db_connect.php';
+require_once 'rating_helper.php';
+
+if (!isset($_SESSION['userID'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$loggedUserID = $_SESSION['userID'];
+
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    header("Location: Homepage.php");
+    exit;
+}
+
+$peerID = (int)$_GET['id'];
+
+$stmt = $pdo->prepare("
+    SELECT student_ID, name, major, email
+    FROM Student
+    WHERE student_ID = ?
+");
+$stmt->execute([$peerID]);
+$peer = $stmt->fetch();
+
+if (!$peer) {
+    die("Student not found.");
+}
+
+$currentStmt = $pdo->prepare("
+    SELECT name, major
+    FROM Student
+    WHERE student_ID = ?
+");
+$currentStmt->execute([$loggedUserID]);
+$currentUser = $currentStmt->fetch();
+
+$currentUserName = $currentUser ? htmlspecialchars($currentUser['name']) : "User";
+$currentUserMajor = $currentUser ? htmlspecialchars($currentUser['major']) : "";
+
+$skillsStmt = $pdo->prepare("
+    SELECT Skill.name
+    FROM StudentSkill
+    JOIN Skill ON StudentSkill.skill_ID = Skill.skill_ID
+    WHERE StudentSkill.student_ID = ?
+");
+$skillsStmt->execute([$peerID]);
+$skills = $skillsStmt->fetchAll();
+
+$projectsStmt = $pdo->prepare("
+    SELECT courseName, URL
+    FROM PastProject
+    WHERE student_ID = ?
+");
+$projectsStmt->execute([$peerID]);
+$projects = $projectsStmt->fetchAll();
+
+$rating = getStudentRating($pdo, $peerID);
+$topTags = getTopStudentTags($pdo, $peerID);
+
+function h($value) {
+    return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
+}
+
+function initials($name) {
+    $parts = preg_split('/\s+/', trim($name));
+
+    if (count($parts) === 1) {
+        return strtoupper(substr($parts[0], 0, 2));
+    }
+
+    return strtoupper(substr($parts[0], 0, 1) . substr($parts[1], 0, 1));
+}
+
+function skillClass($skillName) {
+    $name = strtolower($skillName);
+
+    if (str_contains($name, 'coding') || str_contains($name, 'programming')) {
+        return 'bd-peer-skill-tag-navy';
+    }
+
+    if (str_contains($name, 'research') || str_contains($name, 'data')) {
+        return 'bd-peer-skill-tag-gold';
+    }
+
+    if (str_contains($name, 'ui') || str_contains($name, 'ux') || str_contains($name, 'innovation')) {
+        return 'bd-peer-skill-tag-pink';
+    }
+
+    return 'bd-peer-skill-tag-teal';
+}
+
+$average = $rating['average'];
+$count = $rating['count'];
+$degree = ($average / 5) * 360;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +106,23 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body id="bd-body-peer-profile">
 
-    <!-- DRAWER OVERLAY -->
+    <input type="hidden" id="rated-student-id" value="<?php echo $peerID; ?>">
+
     <div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
 
-    <!-- SIDE DRAWER -->
     <div class="drawer" id="drawer">
         <div class="drawer-profile">
             <a href="profile.php" class="profile-avatar">👤</a>
             <div>
                 <div class="profile-name">
-                    <a class="profile-name" href="profile.php">Joud BinFaris</a>
+                    <a class="profile-name" href="profile.php"><?php echo $currentUserName; ?></a>
                 </div>
-                <div class="profile-role">IT</div>
+                <div class="profile-role"><?php echo $currentUserMajor; ?></div>
             </div>
         </div>
 
@@ -33,7 +131,6 @@
         </a>
     </div>
 
-    <!-- RATE MODAL -->
     <div id="bd-rate-modal-overlay"></div>
 
     <div id="bd-rate-modal">
@@ -52,12 +149,12 @@
             <div id="bd-rate-tags-title">Choose tags:</div>
 
             <div id="bd-rate-tags-list">
-                <button type="button" class="bd-rate-tag-option">Leadership</button>
-                <button type="button" class="bd-rate-tag-option">Research</button>
-                <button type="button" class="bd-rate-tag-option">Coding</button>
-                <button type="button" class="bd-rate-tag-option">UI/UX</button>
-                <button type="button" class="bd-rate-tag-option">Teamwork</button>
-                <button type="button" class="bd-rate-tag-option">Communication</button>
+                <button type="button" class="bd-rate-tag-option" data-tag="Leadership">Leadership</button>
+                <button type="button" class="bd-rate-tag-option" data-tag="Research">Research</button>
+                <button type="button" class="bd-rate-tag-option" data-tag="Coding">Coding</button>
+                <button type="button" class="bd-rate-tag-option" data-tag="UI/UX">UI/UX</button>
+                <button type="button" class="bd-rate-tag-option" data-tag="Teamwork">Teamwork</button>
+                <button type="button" class="bd-rate-tag-option" data-tag="Communication">Communication</button>
             </div>
 
             <div id="bd-rate-actions">
@@ -68,7 +165,6 @@
         </div>
     </div>
 
-    <!-- SUCCESS MESSAGE -->
     <div id="bd-rate-success-toast">Rating submitted successfully!</div>
 
     <main id="bd-peer-profile-page">
@@ -80,34 +176,39 @@
             <section id="bd-peer-profile-card">
 
                 <header id="bd-peer-profile-header">
-                    <a id="bd-peer-back-button" href="HomePage.php">←</a>
+                    <a id="bd-peer-back-button" href="Homepage.php">←</a>
                     <h1 id="bd-peer-profile-title">Peer Profile</h1>
 
-                    <button class="hamburger" id="bd-peer-hamburger" onclick="toggleDrawer()">
+                    <button class="hamburger" id="bd-peer-hamburger" onclick="toggleDrawer()" aria-label="Menu">
                         <span></span><span></span><span></span>
                     </button>
                 </header>
 
-                <!-- TOP -->
                 <section id="bd-peer-profile-top-section">
 
                     <section id="bd-peer-profile-left-side">
 
-                        <div id="bd-peer-avatar"></div>
+                        <div id="bd-peer-avatar"><?php echo initials($peer['name']); ?></div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Name</span>
-                            <span class="bd-peer-info-value"  id="bd-peer-name">Bodour Albarqi</span>
+                            <span class="bd-peer-info-value" id="bd-peer-name">
+                                <?php echo h($peer['name']); ?>
+                            </span>
                         </div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Major</span>
-                            <span class="bd-peer-info-value">Information Technology</span>
+                            <span class="bd-peer-info-value" id="bd-peer-major">
+                                <?php echo h($peer['major']); ?>
+                            </span>
                         </div>
 
                         <div class="bd-peer-info-row">
                             <span class="bd-peer-info-label">Email</span>
-                            <span class="bd-peer-info-value">student@ksu.edu.sa</span>
+                            <span class="bd-peer-info-value" id="bd-peer-email">
+                                <?php echo h($peer['email']); ?>
+                            </span>
                         </div>
 
                     </section>
@@ -116,13 +217,20 @@
 
                         <div id="bd-peer-rating-section">
 
-                            <div id="bd-peer-rating-circle">
-                                <span id="bd-peer-rating-number">4.8</span>
+                            <div id="bd-peer-rating-circle"
+                                 style="background: conic-gradient(var(--teal) 0deg <?php echo $degree; ?>deg, #e6eef5 <?php echo $degree; ?>deg 360deg);">
+                                <span id="bd-peer-rating-number">
+                                    <?php echo number_format($average, 1); ?>
+                                </span>
                             </div>
 
                             <div id="bd-peer-rating-details">
-                                <p id="bd-peer-rating-stars">★★★★★</p>
-                                <p id="bd-peer-rating-reviews">15 reviews</p>
+                                <p id="bd-peer-rating-stars">
+                                    <?php echo str_replace(['<span class="star filled">', '<span class="star">', '</span>'], ['', '', ''], renderStars($average)); ?>
+                                </p>
+                                <p id="bd-peer-rating-reviews">
+                                    <?php echo $count; ?> reviews
+                                </p>
                             </div>
 
                         </div>
@@ -131,64 +239,82 @@
 
                 </section>
 
-                <!-- WHAT OTHERS SAY -->
                 <section id="bd-peer-skills-section">
 
                     <h2 id="bd-peer-skills-title">What others say</h2>
 
                     <div id="bd-peer-skills-list">
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">Leadership</span>
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-gold">Research</span>
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-navy">Coding</span>
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-pink">UI/UX</span>
+                        <?php if (!empty($topTags)): ?>
+                            <?php foreach ($topTags as $tag): ?>
+                                <span class="bd-peer-skill-tag <?php echo skillClass($tag); ?>">
+                                    <?php echo h($tag); ?>
+                                </span>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">
+                                No ratings yet
+                            </span>
+                        <?php endif; ?>
                     </div>
 
                 </section>
 
-                <!-- SKILLS -->
                 <section id="bd-peer-skills-section-2">
 
                     <h2 id="bd-peer-skills-title-2">Skills</h2>
 
                     <div id="bd-peer-skills-list-2">
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-teal">Communication</span>
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-gold">Problem Solving</span>
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-navy">Team Work</span>
-                        <span class="bd-peer-skill-tag bd-peer-skill-tag-pink">Data Analysis</span>
+                        <?php if (!empty($skills)): ?>
+                            <?php foreach ($skills as $skill): ?>
+                                <span class="bd-peer-skill-tag">
+                                    <?php echo h($skill['name']); ?>
+                                </span>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <span class="bd-peer-skill-tag">No skills added yet</span>
+                        <?php endif; ?>
                     </div>
 
                 </section>
 
-                <!-- PROJECTS -->
                 <section id="bd-peer-projects-section">
 
                     <h2 id="bd-peer-projects-title">Projects</h2>
 
                     <div id="bd-peer-projects-list">
+                        <?php if (!empty($projects)): ?>
+                            <?php foreach ($projects as $project): ?>
+                                <div class="bd-peer-project-item">
+                                    <span class="bd-peer-project-line"></span>
 
-                        <div class="bd-peer-project-item">
-                            <span class="bd-peer-project-line"></span>
-                            <span class="bd-peer-project-text">Sirb Platform</span>
-                        </div>
-
-                        <div class="bd-peer-project-item">
-                            <span class="bd-peer-project-line"></span>
-                            <span class="bd-peer-project-text">Airline Reservation System</span>
-                        </div>
-
-                        <div class="bd-peer-project-item">
-                            <span class="bd-peer-project-line"></span>
-                            <span class="bd-peer-project-text">Recipe Website</span>
-                        </div>
-
+                                    <?php if (!empty($project['URL'])): ?>
+                                        <a class="bd-peer-project-text"
+                                           href="<?php echo h($project['URL']); ?>"
+                                           target="_blank">
+                                            <?php echo h($project['courseName']); ?>
+                                        </a>
+                                    <?php else: ?>
+                                        <span class="bd-peer-project-text">
+                                            <?php echo h($project['courseName']); ?>
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="bd-peer-project-item">
+                                <span class="bd-peer-project-line"></span>
+                                <span class="bd-peer-project-text">No projects added yet</span>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                 </section>
 
-                <!-- BUTTON -->
-                <div id="bd-peer-rate-button-wrapper">
-                    <button id="bd-peer-rate-button">Rate</button>
-                </div>
+                <?php if ($loggedUserID != $peerID): ?>
+                    <div id="bd-peer-rate-button-wrapper">
+                        <button id="bd-peer-rate-button">Rate</button>
+                    </div>
+                <?php endif; ?>
 
             </section>
 

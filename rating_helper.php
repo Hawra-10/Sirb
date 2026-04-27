@@ -9,7 +9,7 @@ function getStudentRating($pdo, $student_id) {
     $sql = "SELECT 
                 AVG(starRate) as average_rating, 
                 COUNT(rate_ID) as review_count 
-            FROM PeerRate 
+            FROM peerrate 
             WHERE Rated_student_ID = :id";
             
     $stmt = $pdo->prepare($sql);
@@ -50,16 +50,16 @@ function renderStars($rating) {
 function getTopStudentTags($pdo, $student_id) {
     // This query counts tags per student and only returns those equal to the MAX count
     $sql = "SELECT rt.name, COUNT(prt.tag_ID) as tag_count
-            FROM RateTag rt
-            JOIN PeerRateTag prt ON rt.tag_ID = prt.tag_ID
-            JOIN PeerRate pr ON prt.rate_ID = pr.rate_ID
-            WHERE pr.PlacedFor_student_ID = :id
+            FROM ratetag rt
+            JOIN peerratetag prt ON rt.tag_ID = prt.tag_ID
+            JOIN peerrate pr ON prt.rate_ID = pr.rate_ID
+            WHERE pr.Rated_student_ID = :id
             GROUP BY rt.tag_ID
             HAVING tag_count = (
                 SELECT COUNT(prt2.tag_ID) as max_count
-                FROM PeerRateTag prt2
-                JOIN PeerRate pr2 ON prt2.rate_ID = pr2.rate_ID
-                WHERE pr2.PlacedFor_student_ID = :id2
+                FROM peerratetag prt2
+                JOIN peerrate pr2 ON prt2.rate_ID = pr2.rate_ID
+                WHERE pr2.Rated_student_ID = :id2
                 GROUP BY prt2.tag_ID
                 ORDER BY max_count DESC
                 LIMIT 1

@@ -239,28 +239,77 @@ function submitPeerRating() {
     return;
   }
 
-  updatePeerRatingUI(bdSelectedRating);
+  const ratedStudentInput = document.getElementById("rated-student-id");
+
+  if (!ratedStudentInput) {
+    alert("Student ID is missing.");
+    return;
+  }
 
   const payload = {
-    peerName: document.getElementById("bd-peer-name")?.textContent || "",
+    ratedStudentID: ratedStudentInput.value,
     rating: bdSelectedRating,
     tags: bdSelectedTags
   };
 
-  console.log("Rating payload to send later:", payload);
+  fetch("save_rating.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success) {
+        alert(data.message || "Could not save rating.");
+        return;
+      }
 
-  /*
-    Later with PHP + DB:
-    fetch("save_rating.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      updatePeerRatingUIFromDatabase(data.average, data.count);
+      closeRateModal();
+      showRatingSuccessToast();
     })
-  */
-
-  closeRateModal();
-  showRatingSuccessToast();
+    .catch(error => {
+      console.error(error);
+      alert("Something went wrong while saving the rating.");
+    });
 }
+
+
+
+function updatePeerRatingUIFromDatabase(average, count) {
+  const ratingNumber = document.getElementById("bd-peer-rating-number");
+  const ratingStars = document.getElementById("bd-peer-rating-stars");
+  const ratingReviews = document.getElementById("bd-peer-rating-reviews");
+  const ratingCircle = document.getElementById("bd-peer-rating-circle");
+
+  const avg = Number(average);
+
+  if (ratingNumber) {
+    ratingNumber.textContent = avg.toFixed(1);
+  }
+
+  if (ratingReviews) {
+    ratingReviews.textContent = `${count} reviews`;
+  }
+
+  if (ratingStars) {
+    ratingStars.textContent = buildStarsFromAverage(avg);
+  }
+
+  if (ratingCircle) {
+    const degree = (avg / 5) * 360;
+    ratingCircle.style.background = `conic-gradient(
+      var(--teal) 0deg ${degree}deg,
+      #e6eef5 ${degree}deg 360deg
+    )`;
+  }
+}
+
+
+
+
 
 function updatePeerRatingUI(newRating) {
   const ratingNumber = document.getElementById("bd-peer-rating-number");

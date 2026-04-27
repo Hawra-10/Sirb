@@ -22,12 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $pdo->prepare("SELECT * FROM Student WHERE email = ?");
         $stmt->execute([$email]);
         $student = $stmt->fetch();
+        
 
         // Check if student exists and password matches
         if ($student && $password == $student['password']) {
-            $_SESSION['email'] = $student['email'];
-            header("Location: Homepage.php");
-            exit();
+    $_SESSION['email'] = $student['email'];
+    $_SESSION['userID'] = $student['student_ID'] ?? $student['id'] ?? null;
+
+    header("Location: Homepage.php");
+    exit();
+
         } else {
             $error = "Wrong email or password.";
         }
