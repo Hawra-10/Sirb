@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_start(); // 1. Must start session to get the logged-in ID
 include 'db_connect.php';
 require_once 'rating_helper.php';
