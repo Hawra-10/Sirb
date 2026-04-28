@@ -128,15 +128,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </footer>
 
   <script>
-    /* ... (The existing JS you provided works great) ... */
-    /* Just add this to ensure the form submits after validation: */
     const form = document.getElementById('registerForm');
     const registerBtn = document.getElementById('ar-register-btn');
     const emailInput = document.getElementById('ar-email');
     const passwordInput = document.getElementById('ar-password');
     const confirmInput = document.getElementById('ar-password-confirm');
     
-    // Toggle Logic (your existing code here)
+    // Error Elements
+    const emailError = document.getElementById('ar-email-error');
+    const passwordError = document.getElementById('ar-password-error');
+    const confirmError = document.getElementById('ar-confirm-error');
+
+    // Helper function to show/hide errors
+    function toggleError(element, show) {
+        if (show) {
+            element.classList.add('ar-visible');
+            element.style.display = 'block'; // Ensure it's visible if CSS uses display:none
+        } else {
+            element.classList.remove('ar-visible');
+            element.style.display = 'none';
+        }
+    }
+
+    form.addEventListener('submit', (e) => {
+        let valid = true;
+
+        // 1. Email Validation (Simple regex)
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailInput.value)) {
+            toggleError(emailError, true);
+            valid = false;
+        } else {
+            toggleError(emailError, false);
+        }
+
+        // 2. Password Length Validation
+        if (passwordInput.value.length < 6) {
+            toggleError(passwordError, true);
+            valid = false;
+        } else {
+            toggleError(passwordError, false);
+        }
+
+        // 3. Confirm Password Validation
+        if (passwordInput.value !== confirmInput.value) {
+            toggleError(confirmError, true);
+            valid = false;
+        } else {
+            toggleError(confirmError, false);
+        }
+        
+        if (!valid) {
+            e.preventDefault(); // Stop form submission
+        } else {
+            registerBtn.disabled = true;
+            registerBtn.textContent = 'Creating Account...';
+        }
+    });
+
+    // --- Keep your existing Toggle Eye Logic below ---
     const togglePw = document.getElementById('ar-toggle-pw');
     const toggleConfirm = document.getElementById('ar-toggle-confirm');
     const EYE_OPEN = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
@@ -151,19 +201,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     setupPasswordToggle(togglePw, passwordInput);
     setupPasswordToggle(toggleConfirm, confirmInput);
-
-    form.addEventListener('submit', (e) => {
-      let valid = true;
-      if (passwordInput.value.length < 6) { valid = false; /* show error logic */ }
-      if (passwordInput.value !== confirmInput.value) { valid = false; /* show error logic */ }
-      
-      if (!valid) {
-          e.preventDefault(); // Stop form from sending to PHP if JS validation fails
-      } else {
-          registerBtn.disabled = true;
-          registerBtn.textContent = 'Creating Account...';
-      }
-    });
-  </script>
+</script>
 </body>
 </html>
