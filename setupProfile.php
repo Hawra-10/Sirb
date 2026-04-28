@@ -111,11 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="ar-name-row">
         <div class="ar-name-col">
           <input id="ar-firstname-input" class="ar-input" type="text" name="first_name" placeholder="First name" autocomplete="off" />
-          <div class="ar-error" id="ar-firstname-error">First name is required.</div>
+          <div class="ar-error" id="ar-firstname-error" style="color: #c0392b;">First name is required.</div>
         </div>
         <div class="ar-name-col">
           <input id="ar-lastname-input" class="ar-input" type="text" name="last_name" placeholder="Last name" autocomplete="off" />
-          <div class="ar-error" id="ar-lastname-error">Last name is required.</div>
+          <div class="ar-error" id="ar-lastname-error" style="color: #c0392b;">Last name is required.</div>
         </div>
       </div>
     </div>
@@ -123,24 +123,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="ar-field">
       <label class="ar-label">Major <span class="ar-required">*</span></label>
       <div class="ar-radio-group" id="ar-major-group">
-        <label class="ar-radio-option">
-          <input type="radio" name="major" value="Computer Science" />
-          <span class="ar-radio-label">Computer Science</span>
-        </label>
-        <label class="ar-radio-option">
-          <input type="radio" name="major" value="Information Technology" />
+          <label class="ar-radio-option">
+          <input type="radio" name="major" value="IT" />
           <span class="ar-radio-label">Information Technology</span>
         </label>
         <label class="ar-radio-option">
-          <input type="radio" name="major" value="Information Systems" />
+          <input type="radio" name="major" value="CS" />
+          <span class="ar-radio-label">Computer Science</span>
+        </label>
+        
+        <label class="ar-radio-option">
+          <input type="radio" name="major" value="IS" />
           <span class="ar-radio-label">Information Systems</span>
         </label>
         <label class="ar-radio-option">
-          <input type="radio" name="major" value="Software Engineering" />
+          <input type="radio" name="major" value="SWE" />
           <span class="ar-radio-label">Software Engineering</span>
         </label>
       </div>
-      <div class="ar-error" id="ar-major-error">Please select a major.</div>
+      <div class="ar-error" id="ar-major-error" style="color: #c0392b;">Please select a major.</div>
     </div>
 
     <div class="ar-field">
@@ -156,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="ar-skill" data-skill="Data Analysis">Data Analysis <span class="ar-skill-check">✓</span></div>
       </div>
       <p class="ar-skills-hint">Select up to 3 skills</p>
-      <div class="ar-error" id="ar-skills-error">Please select at least one skill.</div>
+      <div class="ar-error" id="ar-skills-error" style="color: #c0392b;">Please select at least one skill.</div>
     </div>
 
     <div class="ar-divider"></div>
@@ -236,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div>
         <span class="ar-project-sublabel">Project URL</span>
         <input class="ar-input ar-proj-url" type="url" name="project_url[]" placeholder="https://drive.google.com/..." autocomplete="off" />
-        <div class="ar-error ar-proj-url-error">Please provide a valid Google Drive or Google Docs sharing link.</div>
+        <div class="ar-error ar-proj-url-error" style="color: #c0392b;">Please provide a valid Google Drive or Google Docs sharing link.</div>
         <p class="ar-url-note">Make sure the link permissions are set to 'Public' or 'Anyone with the link'</p>
       </div>
     `;
