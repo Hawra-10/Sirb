@@ -4,14 +4,19 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+session_start(); // 1. Must start session to get the logged-in ID
 include 'db_connect.php';
 require_once 'rating_helper.php';
+
+// 2. Get the logged-in ID
+$logged_id = $_SESSION['userID']; 
 
 $search = isset($_GET['student_name']) ? trim($_GET['student_name']) : "";
 $major = isset($_GET['major']) ? $_GET['major'] : "all";
 
-$sql = "SELECT * FROM Student WHERE 1=1";
-$params = [];
+// 3. Update the query to exclude the current user
+$sql = "SELECT * FROM student WHERE 1=1 AND student_ID != :logged_id";
+$params = ['logged_id' => $logged_id];
 
 if (!empty($search)) {
     $sql .= " AND name LIKE :name";
