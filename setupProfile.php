@@ -2,65 +2,80 @@
 session_start();
 require 'db_connect.php';
 
-if (!isset($_SESSION['userID'])) {
-    $_SESSION['error'] = "Please login first.";
-    header("Location: login.php");
+// 1. Ensure the user came from the register.php step
+if (!isset($_SESSION['pending_email']) || !isset($_SESSION['pending_password'])) {
+    $_SESSION['error'] = "Please complete the first registration step.";
+    header("Location: register.php");
     exit();
 }
 
+$error = "";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $student_ID = $_SESSION['userID'];
-
     // Get form values
-    $first_name = $_POST['first_name'];
-    $last_name  = $_POST['last_name'];
+    $first_name = trim($_POST['first_name']);
+    $last_name  = trim($_POST['last_name']);
     $name       = $first_name . ' ' . $last_name;
-    $major      = $_POST['major'];
-    $skills_str = $_POST['skills'];
+    $major      = trim($_POST['major']);
+    $skills_str = $_POST['skills'] ?? '';
+    
+    // Get pending credentials
+    $email      = $_SESSION['pending_email'];
+    $password   = $_SESSION['pending_password'];
+    $date       = date('Y-m-d'); // Current date
 
-    // Update the student's name and major
-    $stmt = $pdo->prepare("UPDATE Student SET name = ?, major = ? WHERE student_ID = ?");
-    $stmt->execute([$name, $major, $student_ID]);
+    // 2. Insert the new student
+    $stmt = $pdo->prepare("INSERT INTO student (email, password, name, major, registrationDate) VALUES (?, ?, ?, ?, ?)");
+    
+    if ($stmt->execute([$email, $password, $name, $major, $date])) {
+        // Get the new student's ID
+        $student_ID = $pdo->lastInsertId();
 
-    // Delete old skills to avoid duplicates
-    $stmt = $pdo->prepare("DELETE FROM studentskill WHERE student_ID = ?");
-    $stmt->execute([$student_ID]);
+        // 3. Insert skills
+        if (!empty($skills_str)) {
+            $skills = explode(',', $skills_str);
 
-    // Insert new skills
-    if (!empty($skills_str)) {
-        $skills = explode(',', $skills_str);
+            foreach ($skills as $skill_name) {
+                $skill_name = trim($skill_name);
 
-        foreach ($skills as $skill_name) {
-            $skill_name = trim($skill_name);
+                $stmt_skill = $pdo->prepare("SELECT skill_ID FROM skill WHERE name = ?");
+                $stmt_skill->execute([$skill_name]);
+                $skill = $stmt_skill->fetch();
 
-            $stmt = $pdo->prepare("SELECT skill_ID FROM skill WHERE name = ?");
-            $stmt->execute([$skill_name]);
-            $skill = $stmt->fetch();
-
-            if ($skill) {
-                $stmt = $pdo->prepare("INSERT INTO studentskill (student_ID, skill_ID) VALUES (?, ?)");
-                $stmt->execute([$student_ID, $skill['skill_ID']]);
+                if ($skill) {
+                    $stmt_insert = $pdo->prepare("INSERT INTO studentskill (student_ID, skill_ID) VALUES (?, ?)");
+                    $stmt_insert->execute([$student_ID, $skill['skill_ID']]);
+                }
             }
         }
-    }
 
-    // Insert projects
-    $project_names = $_POST['project_name'] ?? [];
-    $project_urls  = $_POST['project_url']  ?? [];
+        // 4. Insert projects
+        $project_names = $_POST['project_name'] ?? [];
+        $project_urls  = $_POST['project_url']  ?? [];
 
-    for ($i = 0; $i < count($project_urls); $i++) {
-        $url  = trim($project_urls[$i]);
-        $course = trim($project_names[$i]);
+        for ($i = 0; $i < count($project_urls); $i++) {
+            $url    = trim($project_urls[$i]);
+            $course = trim($project_names[$i]);
 
-        if (!empty($url)) {
-            $stmt = $pdo->prepare("INSERT INTO pastproject (URL, courseName, student_ID) VALUES (?, ?, ?)");
-            $stmt->execute([$url, $course, $student_ID]);
+            if (!empty($url)) {
+                $stmt_proj = $pdo->prepare("INSERT INTO pastproject (URL, courseName, student_ID) VALUES (?, ?, ?)");
+                $stmt_proj->execute([$url, $course, $student_ID]);
+            }
         }
-    }
 
-    header("Location: Homepage.php");
-    exit();
+        // 5. Clean up pending sessions and officially log them in
+        unset($_SESSION['pending_email']);
+        unset($_SESSION['pending_password']);
+        
+        $_SESSION['userID'] = $student_ID;
+        $_SESSION['email'] = $email;
+
+        header("Location: Homepage.php");
+        exit();
+    } else {
+        $error = "Failed to create profile. Please try again.";
+    }
 }
 ?>
 
@@ -81,12 +96,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <h1 class="ar-title">Set up Profile</h1>
 
+  <?php if ($error): ?>
+    <div class="ar-error ar-visible" style="margin-bottom: 15px; text-align: center;">
+        <?php echo htmlspecialchars($error); ?>
+    </div>
+  <?php endif; ?>
+
   <form method="POST" action="" id="ar-setup-form">
 
-    <!-- Hidden input that holds the selected skills as a comma-separated string -->
     <input type="hidden" name="skills" id="ar-skills-input" value="" />
 
-    <!-- Name -->
     <div class="ar-field">
       <label class="ar-label">Name <span class="ar-required">*</span></label>
       <div class="ar-name-row">
@@ -101,7 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
     </div>
 
-    <!-- Major -->
     <div class="ar-field">
       <label class="ar-label">Major <span class="ar-required">*</span></label>
       <div class="ar-radio-group" id="ar-major-group">
@@ -125,7 +143,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="ar-error" id="ar-major-error">Please select a major.</div>
     </div>
 
-    <!-- Skills -->
     <div class="ar-field">
       <label class="ar-label">Skills <span class="ar-required">*</span></label>
       <div class="ar-skills-wrap" id="ar-skills-wrap">
@@ -144,13 +161,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="ar-divider"></div>
 
-    <!-- Projects -->
     <div class="ar-field">
       <label class="ar-label">Projects</label>
       <div id="ar-projects-list" class="ar-projects-list"></div>
     </div>
 
-    <!-- Done button -->
     <button class="ar-button" type="submit" id="ar-done-btn">Done</button>
     <div class="ar-success-msg" id="ar-success">🎉 Profile set up successfully!</div>
 
