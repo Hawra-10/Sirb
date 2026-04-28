@@ -959,6 +959,17 @@ footer span {
   word-break: break-word;
 }
 
+.peer-email-link {
+    color: var(--muted);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.peer-email-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
 /* =========================
    RIGHT SIDE
 ========================= */
