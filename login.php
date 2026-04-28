@@ -31,6 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute([$email]);
         $student = $stmt->fetch();
 
+        $stmt2 = $pdo->prepare("SELECT * FROM admin WHERE email = ?");
+        $stmt2->execute([$email]);
+        $admin = $stmt2->fetch();
+
+
         // Check if student exists and password matches
         if ($student && $password == $student['password']) {
             $_SESSION['email'] = $student['email'];
@@ -39,7 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: Homepage.php");
             exit();
         } else {
-            $error = "Wrong email or password.";
+          if ($admin && $password == $admin['password']) {
+
+            header("Location: admin_maintenance.php");
+            exit();
+
+          }
+          else{$error = "Wrong email or password.";}
+            
         }
     }
 }
