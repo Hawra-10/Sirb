@@ -30,12 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->fetch()) {
             $error = "This email is already registered.";
         } else {
-            // 3. Store credentials temporarily in the session and redirect
-            // We use 'pending_' prefix to denote that the account isn't fully created yet.
+            // --- PASSWORD HASHING START ---
+            // PASSWORD_DEFAULT uses the strongest current algorithm (currently BCrypt)
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            // --- PASSWORD HASHING END ---
+
             $_SESSION['pending_email'] = $email;
-            $_SESSION['pending_password'] = $password; 
             
-            // Redirect to the next step
+            // Store the HASHED version, not the plain text one!
+            $_SESSION['pending_password'] = $hashed_password;
             header("Location: setupProfile.php");
             exit();
         }
