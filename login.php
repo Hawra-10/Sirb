@@ -40,11 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
         // Check if admin exists and verify hashed password
-        else if ($admin && password_verify($password, $admin['password'])) {
-            $_SESSION['email'] = $admin['email'];
-            header("Location: admin_maintenance.php");
-            exit();
-        } else {
+        else if ($admin && (
+    password_verify($password, $admin['password']) || $password === $admin['password']
+)) {
+    $_SESSION['email'] = $admin['email'];
+    $_SESSION['userType'] = 'admin';
+
+    header("Location: admin_maintenance.php");
+    exit();
+} else {
             $error = "Wrong email or password.";
         }
     }

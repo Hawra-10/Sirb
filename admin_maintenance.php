@@ -36,7 +36,11 @@ $students = $stmt->fetchAll();
                     <div class="header-title">
                         <h2 style="font-family: 'Syne'; color: var(--navy); margin: 0;">System Maintenance</h2>
                     </div>
-                    <button onclick="window.location.href='login.php'" class="drawer-logout" style="margin-top: 0; padding: 10px 20px;">Logout</button>
+
+                   
+                    <button id="logout-btn" class="drawer-logout" style="margin-top: 0; padding: 10px 20px;">
+                        Logout
+                    </button>
                 </header>
 
                 <div class="results-meta">
@@ -69,7 +73,14 @@ $students = $stmt->fetchAll();
             </div>
         </main>
     </div>
+
     <footer>© 2025 <span>Sirb</span>. All rights reserved.</footer>
+
+   
+    <div id="logout-success-message">
+        Logged out successfully
+    </div>
+
     <script>
         const selectAll = document.getElementById('selectAll');
         const checkboxes = document.querySelectorAll('.student-checkbox');
@@ -96,6 +107,17 @@ $students = $stmt->fetchAll();
                     body: JSON.stringify({ ids: selectedIds })
                 }).then(() => location.reload());
             }
+        });
+
+        
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            const msg = document.getElementById("logout-success-message");
+
+            msg.classList.add("show");
+
+            setTimeout(function () {
+                window.location.href = "logout.php";
+            }, 1200);
         });
     </script>
 </body>
