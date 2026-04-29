@@ -128,7 +128,7 @@ $degree = ($average / 5) * 360;
                 </div>
             </div>
 
-            <a class="drawer-logout" href="login.php">
+            <a class="drawer-logout" href="splash.php">
                 ← Log out
             </a>
         </div>
