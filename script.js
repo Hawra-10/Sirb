@@ -2,6 +2,11 @@
    GLOBAL / SHARED FUNCTIONS
 ───────────────────────────────────────────── */
 
+
+
+
+
+
 function getActiveHamburger() {
   return document.getElementById("hamburger") || document.getElementById("bd-peer-hamburger");
 }
@@ -269,7 +274,10 @@ function submitPeerRating() {
       updatePeerRatingUIFromDatabase(data.average, data.count);
       closeRateModal();
 showRatingSuccessToast();
-location.reload();
+
+setTimeout(() => {
+  location.reload();
+}, 4000);
     })
     .catch(error => {
       console.error(error);

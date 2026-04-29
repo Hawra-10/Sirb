@@ -128,10 +128,16 @@ $degree = ($average / 5) * 360;
                 </div>
             </div>
 
-            <a class="drawer-logout" href="splash.php">
-                ← Log out
-            </a>
+            <a class="drawer-logout" href="#" onclick="showLogoutMessage(event)">
+    ← Log out
+</a>
+
+
+
+
         </div>
+
+        <div id="logout-success-message">Logged out successfully.</div>
 
         <div id="bd-rate-modal-overlay"></div>
 
@@ -341,5 +347,18 @@ $degree = ($average / 5) * 360;
         </footer>
 
         <script src="script.js"></script>
+<script>
+function showLogoutMessage(event) {
+    event.preventDefault();
+
+    const message = document.getElementById("logout-success-message");
+    message.classList.add("show");
+
+    setTimeout(function () {
+        window.location.href = "logout.php";
+    }, 1500);
+}
+</script>
+
     </body>
 </html>

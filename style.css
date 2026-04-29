@@ -1430,7 +1430,8 @@ footer span {
 /* =========================
    SUCCESS TOAST
 ========================= */
-#bd-rate-success-toast {
+#bd-rate-success-toast,
+#logout-success-message {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -1455,16 +1456,12 @@ footer span {
   text-align: center;
 }
 
-#bd-rate-success-toast.show {
+/* لما تظهر */
+#bd-rate-success-toast.show,
+#logout-success-message.show {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, -50%) scale(1);
-}
-
-#bd-rate-success-toast.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
 }
 
 /* =========================
