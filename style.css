@@ -1184,7 +1184,7 @@ footer span {
 /* =========================
    BUTTON
 ========================= */
-#bd-peer-rate-button-wrapper {
+#bd-peer-rate-button-wrapper,#bd-peer-delete-button-wrapper {
   display: flex;
   justify-content: flex-end;
 }
@@ -1204,8 +1204,28 @@ footer span {
     inset 0 0.04rem 0 rgba(255, 255, 255, 0.18);
   transition: var(--transition);
 }
+#bd-peer-delete-button {
+  padding: 0.9rem 1.6rem;
+  border-radius: 1rem;
+  border: none;
+  background: #ef4444;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: 'DM Sans', Arial, sans-serif;
+  cursor: pointer;
+  box-shadow:
+    0 0.95rem 1.5rem rgba(26, 42, 74, 0.16),
+    inset 0 0.04rem 0 rgba(255, 255, 255, 0.18);
+  transition: var(--transition);
+}
 
-#bd-peer-rate-button:hover {
+/* <div id="bd-peer-delete-button-wrapper" >
+                    <button id="bd-peer-delete-button" onclick="confirmDeleteAccount()" >
+                        Delete Account
+                    </button>*/
+
+#bd-peer-rate-button:hover,#bd-peer-delete-button-wrapper:hover{
   transform: translateY(-0.08rem);
 }
 

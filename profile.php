@@ -267,8 +267,15 @@ $degree = ($average / 5) * 360;
                     </div>
                 </section>
 
+                
                 <div id="bd-peer-rate-button-wrapper">
                     <button id="bd-peer-rate-button" onclick="toggleEditMode()">Edit Profile</button>
+                </div>
+                
+                <div id="bd-peer-delete-button-wrapper" >
+                    <button id="bd-peer-delete-button" onclick="confirmDeleteAccount()" >
+                        Delete Account
+                    </button>
                 </div>
             </section>
         </section>
@@ -279,6 +286,14 @@ $degree = ($average / 5) * 360;
     </footer>
 
     <script>
+        function confirmDeleteAccount() {
+            const confirmation = confirm("Are you absolutely sure you want to delete your account? This action cannot be undone and you will lose all your data.");
+            
+            if (confirmation) {
+                // Redirect to a PHP file that handles the actual database deletion and session destruction
+                window.location.href = 'delete_account.php';
+            }
+        }
         function toggleDrawer() {
             document.getElementById('drawer').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
