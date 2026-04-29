@@ -256,7 +256,7 @@ $degree = ($average / 5) * 360;
                                     </span>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <span class="bd-peer-skill-tag bd-peer-skill-tag">
+                                <span class="bd-peer-skill-tag bd-peer-skill-tag-none">
                                     No tags yet
                                 </span>
                             <?php endif; ?>
@@ -286,27 +286,39 @@ $degree = ($average / 5) * 360;
 
                         <h2 id="bd-peer-projects-title">Projects</h2>
 
-                        <div class="bd-peer-project-item">
-                            <span class="bd-peer-project-line"></span>
+                        <div id="bd-peer-projects-list">
+                            <?php if (!empty($projects)): ?>
+                                <?php foreach ($projects as $project): ?>
+                                    <div class="bd-peer-project-item">
+                                        <span class="bd-peer-project-line"></span>
 
-                            <?php
-                            // If courseName is null/empty, provide a default string
-                            $rawName = $project['courseName'] ?? '';
-                            $displayName = (trim($rawName) !== '') ? $rawName : "Unnamed Project";
+                                        <?php
+                                        $url = $project['URL'] ?? '';
+                                        // Check if name is null, empty, or just whitespace
+                                        $name = trim($project['courseName'] ?? '');
 
-                            $url = $project['URL'] ?? '';
-                            ?>
+                                        // If name is empty, use the placeholder "Project" (or whatever you prefer)
+                                        $linkText = (!empty($name)) ? $name : "Project";
+                                        ?>
 
-                            <?php if (!empty($url)): ?>
-                                <a class="bd-peer-project-text"
-                                   href="<?php echo h($url); ?>"
-                                   target="_blank">
-                                       <?php echo h($displayName); ?>
-                                </a>
+                                        <?php if (!empty($url)): ?>
+                                            <a class="bd-peer-project-text"
+                                               href="<?php echo h($url); ?>"
+                                               target="_blank">
+                                                   <?php echo h($linkText); ?>
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="bd-peer-project-text">
+                                                <?php echo h($linkText); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
                             <?php else: ?>
-                                <span class="bd-peer-project-text">
-                                    <?php echo h($displayName); ?>
-                                </span>
+                                <div class="bd-peer-project-item">
+                                    <span class="bd-peer-project-line"></span>
+                                    <span class="bd-peer-project-text">No projects added yet</span>
+                                </div>
                             <?php endif; ?>
                         </div>
 

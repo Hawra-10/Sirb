@@ -32,9 +32,14 @@ try {
 
     // 3. Sync Projects
     $pdo->prepare("DELETE FROM pastproject WHERE student_ID = ?")->execute([$userID]);
+    
     foreach ($data['projects'] as $proj) {
+        // Change $proj['name'] to $proj['courseName'] to match your JS fetch request
+        $pName = !empty($proj['courseName']) ? $proj['courseName'] : null; 
+        $pUrl  = $proj['url'] ?? '';
+
         $pdo->prepare("INSERT INTO pastproject (student_ID, courseName, URL) VALUES (?, ?, ?)")
-            ->execute([$userID, $proj['name'], $proj['url']]);
+            ->execute([$userID, $pName, $pUrl]);
     }
 
     $pdo->commit();

@@ -1113,6 +1113,12 @@ footer span {
   color: #cf4f80;
 }
 
+.bd-peer-skill-tag-none {
+  background: #f1f4f9;
+  border-color:#dce3f1;
+  color: #002b5c;
+}
+
 /* =========================
    PROJECTS SECTION
 ========================= */
