@@ -247,12 +247,17 @@ $degree = ($average / 5) * 360;
                                 <?php foreach ($projects as $project): ?>
                                     <div class="bd-peer-project-item">
                                         <span class="bd-peer-project-line"></span>
-                                        <span class="bd-peer-project-text"><?= h($project['courseName']) ?></span>
-                                        <a href="<?= h($project['URL']) ?>" target="_blank" class="project-link-icon">🔗 View</a>
+                                        <?php
+                                        // If courseName is null or empty, use the placeholder
+                                        $displayName = !empty($project['courseName']) ? $project['courseName'] : "Project";
+                                        ?>
+                                        <span class="bd-peer-project-text"><?= h($displayName) ?></span>
+
+                                        <?php if (!empty($project['URL'])): ?>
+                                            <a href="<?= h($project['URL']) ?>" target="_blank" class="project-link-icon">🔗 View</a>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endforeach; ?>
-                            <?php else: ?>
-                                <p style="font-size: 13px; color: #64748b;">No projects added yet.</p>
                             <?php endif; ?>
                         </div>
 
@@ -355,11 +360,19 @@ $degree = ($average / 5) * 360;
                     });
 
                     // 3. Collect Projects
+                    // Inside the projects collection part of toggleEditMode()
                     const projectItems = document.querySelectorAll('.bd-peer-project-item');
                     updatedData.projects = Array.from(projectItems).map(item => {
+                        let nameText = item.querySelector('.bd-peer-project-text').innerText.trim();
+
+                        // If the text is exactly our placeholder, send empty to the DB
+                        if (nameText === "Project") {
+                            nameText = "";
+                        }
+
                         return {
-                            courseName: item.querySelector('.bd-peer-project-text').innerText,
-                            url: item.querySelector('a').getAttribute('href')
+                            courseName: nameText, // Using the correct key name now!
+                            url: item.querySelector('a') ? item.querySelector('a').getAttribute('href') : ""
                         };
                     });
 
@@ -476,29 +489,42 @@ $degree = ($average / 5) * 360;
                 const urlInput = document.getElementById('new-project-url');
                 const errorMsg = document.getElementById('url-error-msg');
 
-                const name = nameInput.value.trim();
+                // 1. Get the values
+                let name = nameInput.value.trim();
                 const url = urlInput.value.trim();
 
+                // 2. The Regex check
                 const googleRegex = /^(https?:\/\/)?(docs\.google\.com|drive\.google\.com)\/.*$/;
 
-                if (name === "" || !googleRegex.test(url)) {
+                if (!googleRegex.test(url)) {
                     errorMsg.style.display = "block";
                     return;
                 }
 
                 errorMsg.style.display = "none";
 
+                // 3. THE PLACEHOLDER LOGIC (Ensure this is exactly here)
+                const finalName = (name === "") ? "Project" : name;
+
                 const list = document.getElementById('bd-peer-projects-list');
+
+                // 4. Remove "No projects yet" message if it exists
+                const emptyMsg = list.querySelector('p');
+                if (emptyMsg)
+                    emptyMsg.remove();
+
+                // 5. Create the new element
                 const newItem = document.createElement('div');
                 newItem.className = 'bd-peer-project-item';
                 newItem.innerHTML = `
-                  <span class="bd-peer-project-line"></span>
-                  <span class="bd-peer-project-text">${finalName}</span>
-                  <a href="${url}" target="_blank" class="project-link-icon" style="display:none;">🔗 View</a>
-                    `;
+        <span class="bd-peer-project-line"></span>
+        <span class="bd-peer-project-text">${finalName}</span>
+        <a href="${url}" target="_blank" class="project-link-icon">🔗 View</a>
+    `;
 
                 list.appendChild(newItem);
 
+                // 6. Reset inputs
                 nameInput.value = "";
                 urlInput.value = "";
             }
