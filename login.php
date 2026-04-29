@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p class="ar-subtitle">Welcome back! Sign in to continue.</p>
 
                 <!-- Show error message if login failed -->
-<?php if ($error != ""): ?>
+                <?php if ($error != ""): ?>
                     <div class="ar-alert"><?= $error ?></div>
                 <?php endif; ?>
 
@@ -139,8 +139,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
 
-                    <button class="ar-button" type="submit">Login</button>
+                    <form method="POST" action="">
+                        <button class="ar-button" type="submit">Login</button>
+                    </form>
 
+                    <div class="ar-signup-prompt">
+                        Don't have an account? <a href="register.php">Register here</a>
+                    </div>
                 </form>
 
             </div>

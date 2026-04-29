@@ -122,6 +122,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <button type="submit" class="ar-button" id="ar-register-btn">Register</button>
+        
+        <div class="ar-signup-prompt">
+        Already have an account? <a href="login.php">Sign in here</a>
+      </div>
       </form>
     </div>
   </div>

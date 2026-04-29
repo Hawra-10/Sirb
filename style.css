@@ -2455,6 +2455,26 @@ footer span {
   text-decoration: underline;
 }
 
+
+.ar-signup-prompt {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 0.88rem;
+      font-family: 'DM Sans', sans-serif;
+      color: #64748b; /* Muted slate color */
+    }
+
+    .ar-signup-prompt a {
+      color: #1a2a4a; /* Your Navy theme color */
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .ar-signup-prompt a:hover {
+      color: #10b981; /* Teal hover effect */
+      text-decoration: underline;
+    }
 /* ============================= */
 /* Responsive */
 /* ============================= */
