@@ -11,11 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $old_email = $email;
 
     // Basic validation
-    if (empty($email)) {
-        $error = "Please enter your email.";
-    } elseif (empty($password)) {
-        $error = "Please enter your password.";
-    } else {
+   if (empty($email) && empty($password)) {
+    $error = "Please enter your email and password.";
+} elseif (empty($email)) {
+    $error = "Please enter your email.";
+} elseif (empty($password)) {
+    $error = "Please enter your password.";
+} else {
 
         // Connect to the database
         require_once 'db_connect.php';
