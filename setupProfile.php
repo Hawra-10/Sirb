@@ -231,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ${idx > 1 ? '<button type="button" class="ar-remove-btn" title="Remove">✕</button>' : ''}
       </div>
       <div>
-        <span class="ar-project-sublabel">Subject Name</span>
+        <span class="ar-project-sublabel">Subject/Project Name</span>
         <input class="ar-input ar-proj-name" type="text" name="project_name[]" placeholder="e.g. Practical Software Engineering" autocomplete="off" />
       </div>
       <div>

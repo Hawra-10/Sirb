@@ -204,7 +204,7 @@ $degree = ($average / 5) * 360;
                                 </div>
                                 <div id="bd-peer-rating-details">
                                     <p id="bd-peer-rating-stars">★★★★★</p>
-                                    <p id="bd-peer-rating-reviews">Your Average Rating (<?= $count ?> Reviews)</p>
+                                    <p id="bd-peer-rating-reviews">You were rated by <?= $count ?> of your peers</p>
                                 </div>
                             </div>
                         </section>
@@ -220,7 +220,7 @@ $degree = ($average / 5) * 360;
                                     </span>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <p style="font-size: 13px; color: #64748b;">No peer ratings yet.</p>
+                                <p class="bd-peer-skill-tag bd-peer-skill-tag-none" style="font-size: 13px; color: #64748b;">No peer ratings yet.</p>
                             <?php endif; ?>
                         </div>
                     </section>
@@ -268,7 +268,7 @@ $degree = ($average / 5) * 360;
                         <div id="add-project-ui" style="display: none;">
                             <div class="project-input-group">
                                 <p style="font-weight: bold; font-size: 11px; color: #64748b; margin-bottom: 5px;">ADD NEW PROJECT</p>
-                                <input type="text" id="new-project-name" class="edit-input" placeholder="Project Name (e.g. My App)">
+                                <input type="text" id="new-project-name" class="edit-input" placeholder="Subject/Project Name (e.g.Practical Software Engineering, My App)">
                                 <input type="text" id="new-project-url" class="edit-input" placeholder="Google Drive or Docs Link">
                                 <p id="url-error-msg" class="url-error">Invalid link. Please use a Google Drive or Docs URL.</p>
                                 <button onclick="addNewProject()" style="background: #1e293b; color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-size: 12px;">+ Add to List</button>
