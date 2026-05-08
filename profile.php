@@ -545,6 +545,7 @@ $degree = ($average / 5) * 360;
 >>>>>>> Stashed changes
                     };
 
+<<<<<<< Updated upstream
                     // 2. Collect Skills (Targeting the FIXED ID)
                     const skillTags = document.querySelectorAll('#bd-peer-skills-list-2 .bd-peer-skill-tag');
                     updatedData.skills = Array.from(skillTags).map(tag => {
@@ -649,6 +650,8 @@ $degree = ($average / 5) * 360;
                     if (list.querySelectorAll('.bd-peer-skill-tag').length === 0) {
                         list.innerHTML = '<p style="font-size: 13px; color: #64748b;">No skills added yet.</p>';
 =======
+=======
+>>>>>>> Stashed changes
                 fetch('update_profile.php', {
                     method: 'POST',
                     headers: {
