@@ -67,7 +67,7 @@ function initials($name) {
 function skillClass($skillName) {
     $name = strtolower($skillName);
 
-    if (str_contains($name, 'coding') || str_contains($name, 'programming')) {
+    if (str_contains($name, 'programming')) {
         return 'bd-peer-skill-tag-navy';
     }
 
@@ -88,6 +88,7 @@ $degree = ($average / 5) * 360;
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< Updated upstream
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,6 +140,116 @@ $degree = ($average / 5) * 360;
             }
         </style>
     </head>
+=======
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        .edit-input {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 4px 8px;
+            width: 100%;
+            background: #f8fafc;
+            outline-color: #10b981;
+            margin-bottom: 8px;
+        }
+
+        /* --- Skill Tag Custom Colors & Layout --- */
+        .bd-peer-skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            border: 2px solid transparent;
+            white-space: nowrap;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tag-count {
+            background-color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+            color: inherit; 
+        }
+
+        /* Added !important to ensure your external CSS doesn't override the colors */
+        
+        /* Gold Theme (Research) */
+        .bd-peer-skill-tag-gold {
+            background-color: #fef3c7 !important;
+            border-color: #fde68a !important;
+            color: #b45309 !important;
+        }
+
+        /* Navy Theme (Coding) */
+        .bd-peer-skill-tag-navy {
+            background-color: #f1f5f9 !important;
+            border-color: #e2e8f0 !important;
+            color: #1e293b !important;
+        }
+
+        /* Pink Theme (UI/UX) */
+        .bd-peer-skill-tag-pink {
+            background-color: #fdf2f8 !important;
+            border-color: #fbcfe8 !important;
+            color: #be185d !important;
+        }
+
+        /* Teal Theme (Communication/Teamwork) */
+        .bd-peer-skill-tag-teal {
+            background-color: #f0fdfa !important;
+            border-color: #ccfbf1 !important;
+            color: #0f766e !important;
+        }
+
+        #available-skills-grid .bd-peer-skill-tag {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .limit-reached, .url-error {
+            color: #ef4444;
+            font-size: 11px;
+            margin-top: 5px;
+            display: none;
+        }
+        .project-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            border: 1px dashed #cbd5e1;
+        }
+        .project-link-icon {
+            font-size: 12px;
+            color: #10b981;
+            text-decoration: none;
+            margin-left: auto;
+            font-weight: bold;
+        }
+        .project-link-icon:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+>>>>>>> Stashed changes
 
     <body id="bd-body-peer-profile">
 
@@ -190,6 +301,28 @@ $degree = ($average / 5) * 360;
                                 <span class="bd-peer-info-label">Major</span>
                                 <span id="major-container"><span class="bd-peer-info-value" id="bd-peer-major"><?= h($user['major']) ?></span></span>
                             </div>
+<<<<<<< Updated upstream
+=======
+                        </div>
+                    </section>
+                </section>
+                
+                <section id="bd-peer-skills-section">
+                    <h2 id="bd-peer-skills-title">What others say</h2>
+                    <div id="bd-peer-skills-list">
+                        <?php if (!empty($tagCounts)): ?>
+                            <?php foreach ($tagCounts as $tag): ?>
+                                <span class="bd-peer-skill-tag <?= skillClass($tag['name']) ?>">
+                                    <?= h($tag['name']) ?>
+                                    <span class="tag-count">(<?= h($tag['count'] ?? 1) ?>)</span>
+                                </span>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p style="font-size: 13px; color: #64748b;">No peer ratings yet.</p>
+                        <?php endif; ?>
+                    </div>
+                </section>
+>>>>>>> Stashed changes
 
                             <div class="bd-peer-info-row">
                                 <span class="bd-peer-info-label">Email</span>
@@ -294,6 +427,7 @@ $degree = ($average / 5) * 360;
             © 2026 <span>Sirb</span>. All rights reserved.
         </footer>
 
+<<<<<<< Updated upstream
         <script>
             function confirmDeleteAccount() {
                 const confirmation = confirm("Are you absolutely sure you want to delete your account? This action cannot be undone and you will lose all your data.");
@@ -307,12 +441,28 @@ $degree = ($average / 5) * 360;
                 document.getElementById('drawer').classList.toggle('active');
                 document.getElementById('overlay').classList.toggle('active');
             }
+=======
+    <script>
+        function confirmDeleteAccount() {
+            const confirmation = confirm("Are you absolutely sure you want to delete your account? This action cannot be undone and you will lose all your data.");
+            
+            if (confirmation) {
+                window.location.href = 'delete_account.php';
+            }
+        }
+        
+        function toggleDrawer() {
+            document.getElementById('drawer').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+>>>>>>> Stashed changes
 
             function closeDrawer() {
                 document.getElementById('drawer').classList.remove('active');
                 document.getElementById('overlay').classList.remove('active');
             }
 
+<<<<<<< Updated upstream
             let isEditMode = false;
             const availableSkills = ["Leadership", "Research", "Innovation", "Communication", "Problem Solving", "Programming", "Teamwork", "Data Analysis", "Coding", "UI/UX"];
 
@@ -320,6 +470,21 @@ $degree = ($average / 5) * 360;
                 const btn = document.getElementById('bd-peer-rate-button');
                 const skillContainer = document.getElementById('edit-skills-container');
                 const projectUI = document.getElementById('add-project-ui');
+=======
+        let isEditMode = false;
+        const availableSkills = ["Leadership", "Research", "Innovation", "Communication", "Problem Solving", "Programming", "Teamwork", "Data Analysis", "UI/UX"];
+
+        function toggleEditMode() {
+            const btn = document.getElementById('bd-peer-rate-button');
+            const skillContainer = document.getElementById('edit-skills-container');
+            const projectUI = document.getElementById('add-project-ui');
+            
+            const fields = [
+                { id: 'bd-peer-name', parent: 'name-container', key: 'name' },
+                { id: 'bd-peer-major', parent: 'major-container', key: 'major' },
+                { id: 'bd-peer-email', parent: 'email-container', key: 'email' }
+            ];
+>>>>>>> Stashed changes
 
                 // Mapping the display spans to their container IDs
                 const fields = [
@@ -336,6 +501,7 @@ $degree = ($average / 5) * 360;
                     skillContainer.style.display = "block";
                     projectUI.style.display = "block";
 
+<<<<<<< Updated upstream
                     fields.forEach(field => {
                         const element = document.getElementById(field.id);
                         const parent = document.getElementById(field.parent);
@@ -355,6 +521,28 @@ $degree = ($average / 5) * 360;
                         email: document.getElementById('bd-peer-email').value,
                         skills: [],
                         projects: []
+=======
+            } else {
+                // --- SAVE & EXIT EDIT MODE ---
+                const updatedData = {
+                    name: document.getElementById('bd-peer-name').value,
+                    major: document.getElementById('bd-peer-major').value,
+                    email: document.getElementById('bd-peer-email').value,
+                    skills: [],
+                    projects: []
+                };
+
+                const skillTags = document.querySelectorAll('#bd-peer-skills-list-2 .bd-peer-skill-tag');
+                updatedData.skills = Array.from(skillTags).map(tag => {
+                    return tag.innerText.trim();
+                });
+
+                const projectItems = document.querySelectorAll('.bd-peer-project-item');
+                updatedData.projects = Array.from(projectItems).map(item => {
+                    return {
+                        courseName: item.querySelector('.bd-peer-project-text').innerText,
+                        url: item.querySelector('a').getAttribute('href')
+>>>>>>> Stashed changes
                     };
 
                     // 2. Collect Skills (Targeting the FIXED ID)
@@ -445,6 +633,7 @@ $degree = ($average / 5) * 360;
                 });
             }
 
+<<<<<<< Updated upstream
             function toggleSkill(name) {
                 // Target the FIXED ID
                 const list = document.getElementById('bd-peer-skills-list-2');
@@ -459,20 +648,55 @@ $degree = ($average / 5) * 360;
 
                     if (list.querySelectorAll('.bd-peer-skill-tag').length === 0) {
                         list.innerHTML = '<p style="font-size: 13px; color: #64748b;">No skills added yet.</p>';
+=======
+                fetch('update_profile.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fields.forEach(field => {
+                            const input = document.getElementById(field.id);
+                            const parent = document.getElementById(field.parent);
+                            const newVal = input.value;
+                            parent.innerHTML = `<span class="bd-peer-info-value" id="${field.id}">${newVal}</span>`;
+                        });
+
+                        isEditMode = false;
+                        btn.innerText = "Edit Profile";
+                        btn.style.backgroundColor = ""; 
+                        skillContainer.style.display = "none";
+                        projectUI.style.display = "none";
+                        
+                    } else {
+                        alert("Failed to save: " + (data.message || "Unknown error"));
+>>>>>>> Stashed changes
                     }
                 } else {
                     const emptyMsg = list.querySelector('p');
                     if (emptyMsg)
                         emptyMsg.remove();
 
+<<<<<<< Updated upstream
                     if (currentTags.length >= 3) {
                         warning.style.display = "block";
                         return;
                     }
+=======
+        function renderSkillPicker() {
+            const grid = document.getElementById('available-skills-grid');
+            const currentSkills = Array.from(document.querySelectorAll('#bd-peer-skills-list-2 .bd-peer-skill-tag'))
+                                       .map(s => s.childNodes[0].textContent.trim()); 
+>>>>>>> Stashed changes
 
                     warning.style.display = "none";
                     const newTag = document.createElement('span');
 
+<<<<<<< Updated upstream
                     let colorClass = 'teal';
                     const lowerName = name.toLowerCase();
                     if (lowerName.includes('coding') || lowerName.includes('programming'))
@@ -485,6 +709,50 @@ $degree = ($average / 5) * 360;
                     newTag.className = `bd-peer-skill-tag bd-peer-skill-tag-${colorClass}`;
                     newTag.innerText = name;
                     list.appendChild(newTag);
+=======
+            availableSkills.forEach(name => {
+                const tag = document.createElement('span');
+                
+                let colorClass = 'teal';
+                const lowerName = name.toLowerCase();
+                if ( lowerName.includes('programming')) colorClass = 'navy';
+                else if (lowerName.includes('ui') || lowerName.includes('ux') || lowerName.includes('innovation')) colorClass = 'pink';
+                else if (lowerName.includes('research') || lowerName.includes('data')) colorClass = 'gold';
+
+                // Assign the pretty color classes permanently 
+                tag.className = `bd-peer-skill-tag bd-peer-skill-tag-${colorClass}`;
+                tag.innerText = name;
+                
+                const isActive = currentSkills.includes(name);
+                
+                // If they are not added yet, just fade them a bit, but keep their specific color!
+                tag.style.opacity = isActive ? "1" : "0.45";
+                tag.style.borderStyle = isActive ? "solid" : "dashed";
+                tag.style.fontWeight = isActive ? "bold" : "normal";
+                tag.style.cursor = "pointer";
+
+                tag.onclick = () => {
+                    toggleSkill(name);
+                    renderSkillPicker(); 
+                };
+                grid.appendChild(tag);
+            });
+        }
+
+        function toggleSkill(name) {
+            const list = document.getElementById('bd-peer-skills-list-2');
+            const warning = document.getElementById('skill-warning');
+            
+            const currentTags = Array.from(list.querySelectorAll('.bd-peer-skill-tag'));
+            const existingTag = currentTags.find(t => t.childNodes[0].textContent.trim() === name);
+
+            if (existingTag) {
+                existingTag.remove();
+                warning.style.display = "none";
+                
+                if (list.querySelectorAll('.bd-peer-skill-tag').length === 0) {
+                    list.innerHTML = '<p style="font-size: 13px; color: #64748b;">No skills added yet.</p>';
+>>>>>>> Stashed changes
                 }
             }
 
@@ -517,6 +785,7 @@ $degree = ($average / 5) * 360;
                 if (emptyMsg)
                     emptyMsg.remove();
 
+<<<<<<< Updated upstream
                 // 5. Create the new element
                 const newItem = document.createElement('div');
                 newItem.className = 'bd-peer-project-item';
@@ -531,6 +800,25 @@ $degree = ($average / 5) * 360;
                 // 6. Reset inputs
                 nameInput.value = "";
                 urlInput.value = "";
+=======
+                if (currentTags.length >= 3) {
+                    warning.style.display = "block";
+                    return; 
+                }
+                
+                warning.style.display = "none";
+                const newTag = document.createElement('span');
+                
+                let colorClass = 'teal';
+                const lowerName = name.toLowerCase();
+                if (lowerName.includes('programming')) colorClass = 'navy';
+                else if (lowerName.includes('ui') || lowerName.includes('ux') || lowerName.includes('innovation')) colorClass = 'pink';
+                else if (lowerName.includes('research') || lowerName.includes('data')) colorClass = 'gold';
+                
+                newTag.className = `bd-peer-skill-tag bd-peer-skill-tag-${colorClass}`;
+                newTag.innerText = name;
+                list.appendChild(newTag);
+>>>>>>> Stashed changes
             }
         </script>
         <script src="script.js"></script>
