@@ -274,7 +274,7 @@ $degree = ($average / 5) * 360;
                                 </span>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p style="font-size: 13px; color: #64748b;">No peer ratings yet.</p>
+                            <span class="bd-peer-skill-tag">No peer rating added yet</span>
                         <?php endif; ?>
                     </div>
                 </section>
